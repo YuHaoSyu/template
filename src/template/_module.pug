@@ -1,0 +1,220 @@
+
+mixin breadcrumb(items)
+  nav(aria-label='breadcrumb')
+    ol.breadcrumb
+      each page in items.prev
+        li.breadcrumb-item
+          a(href=page.href)=page.n
+      li.breadcrumb-item.active(aria-current='page')= items.current
+//- +breadcrumb({prev:[{href:'#',n:'Home'},{href:'#',n:'Library'}],current:'Data'})
+
+mixin pagination(counter=4,option)
+  -let config = {}
+  -Object.assign(config,option)
+  nav(aria-label='Page navigation example')
+    ul.pagination(class=config.align class=config.size&&'pagination-'+config.size)
+      li.page-item.disabled
+        a.page-link(href='#', tabindex='-1', aria-disabled='true') Previous
+      -for(let i = 0; i < counter; i++)
+        li.page-item(class={'active':!i})
+          a.page-link(href='#')=(i+1)
+      li.page-item
+        a.page-link(href='#') Next
+
+mixin modal(id='exampleModal', size)
+  -let slots = {};
+  mixin slot(name)
+    -slots[name] = block
+  block
+  .modal.fade(id=id tabindex='-1' role='dialog' aria-labelledby=id+'Label' aria-hidden='true')
+    .modal-dialog(class=size&&'modal-'+size)
+      .modal-content
+        each partial in ['header', 'body', 'footer']
+          if slots[partial]
+            div(class = 'modal-'+partial): -slots[partial]()
+    //- +modal('mainmodal')
+      +slot('header')
+        h5.modal-title(id='mainmodalLabel') Modal title
+        button.close(type='button' data-dismiss='modal' aria-label='Close')
+          span(aria-hidden='true') &times;
+      +slot('body')
+        form
+          .form-group.row
+            .col-sm-2.col-form-label
+              label(for='inputPassword') Password
+            .col-sm-10
+              input#inputPassword.form-control(type='password' placeholder='Password')
+      +slot('footer')
+        button.btn.btn-secondary(type='button' data-dismiss='modal') Close
+        button.btn.btn-primary(type='button') Save changes
+  //從開發工具複製我
+  button.btn.btn-primary(type='button' data-toggle='modal' data-target='#'+id) Launch demo modal
+
+mixin carousel(id='carouselExample',options)
+  -let slots = []
+  -let config = {fade: false,indicators:false,control:false}
+  mixin slot(name)
+    -slots.push(block)
+  block
+
+  -Object.assign(config,options)
+  .carousel.slide(id=id data-ride='carousel' class={'carousel-fade':config.fade})
+    if config.indicators
+      ol.carousel-indicators(class=config.indicators_class)
+        each slot,i in slots
+          li(class={'active':!index} data-target='#'+id data-slide-to=i)
+    .carousel-inner
+      each slot,i in slots
+        if slot
+          .carousel-item(class={'active':!i} data-interval='5000')
+            -slot()
+    if config.control
+      a.carousel-control-prev(href='#'+id role='button' data-slide='prev' class=config.prev_class)
+        span.carousel-control-prev-icon(aria-hidden='true' class=config.previcon_class)
+        span.sr-only Previous
+      a.carousel-control-next(href='#'+id role='button' data-slide='next' class=config.next_class)
+        span.carousel-control-next-icon(aria-hidden='true' class=config.nexticon_class)
+        span.sr-only Next
+      //- +slot
+        img.d-block.w-100(src='https://fakeimg.pl/1366x625/ff8888/' alt='...')
+
+mixin accordion(parentID='accordionExample')
+  -let slots = []
+  -let config = {fade: false,indicators:false,control:false}
+  mixin slot()
+    -slots.push(block)
+  block
+
+  .accordion(id=parentID)
+    each slot,i in slots
+      if slot
+        .card
+          mixin card(cardID,collapseID,heading)
+            .card-header(id=cardID)
+              h2.mb-0
+                button.btn.btn-link.btn-block.text-left(type='button' data-toggle='collapse' data-target='#'+collapseID aria-expanded='true' aria-controls=collapseID)=heading
+            .collapse(class={'show':i===0} id=collapseID aria-labelledby=cardID data-parent='#'+parentID)
+              .card-body
+                block
+          -slot()
+      //- +slot
+        +card('headingOne','collapseOne','Collapsible Group Item #1')
+          p Lorem ipsum dolor sit amet.
+
+mixin media(img,alt,heading,content,options)
+  -let config={imgPos:'left'}
+  -Object.assign(config,options)
+  .media(class={'mt-3':isNest})
+    if config.imgPos==='left'
+      img.mr-3(class=config.imgSelf src=img, alt=alt)
+    .media-body
+      h5.mt-0 heading
+      =content
+      block
+    if config.imgPos==='right'
+      img.mr-3(class=config.imgSelf src=img, alt=alt)
+      //- -console.log(block)
+
+mixin list(item, listId='list-tab')
+  .list-group(role='tablist',id=listId)
+    |
+    |
+    each li, index in item
+      a.list-group-item.list-group-item-action(id='list-'+li+'-list', class={'active':!index}, role='tab', data-toggle='list', href='#list-'+li, aria-controls=li, aria-selected=!index?'true':'false')=li[0].toUpperCase()+li.slice(1)
+      |
+      |
+
+mixin nav(item, navId='nav-tab')
+  nav
+    .nav.nav-tabs(role='tablist')
+      |
+      |
+      each li, index in item
+        a.nav-item.nav-link(class={'active':!index}, id="nav-"+li+"-tab", role='tab', data-toggle='tab', href='#nav-'+li, aria-controls='nav-'+li, aria-selected=!index?'true':'false')=li[0].toUpperCase()+li.slice(1)
+        |
+        |
+
+mixin list-content(items, listContentId='list-tabContent')
+  -let slots = {};
+  mixin slot(name)
+    -slots[name] = block
+  block
+  .tab-content(id=listContentId)
+    each partial, index in items
+      if slots[partial]
+        .tab-pane.fade(id='list-'+partial, class={'show active':!index}, role='tabpanel', aria-labelledby='list-'+partial+'-list')
+          -slots[partial]()
+//- +list-content(['home','profile','msg','setting'])
+  +slot('home')
+    p Lorem ipsum dolor sit amet.1
+
+mixin nav-content(items, listContentId='nav-tabContent')
+  -let slots = {};
+  mixin slot(name)
+    -slots[name] = block
+  block
+  .tab-content(id=listContentId)
+    each partial, index in items
+      if slots[partial]
+        .tab-pane.fade(id='nav-'+partial, class={'show active':!index}, role='tabpanel', aria-labelledby='nav-'+partial+'-tab')
+          -slots[partial]()
+//- +nav-content(['home','profile','msg','setting'])
+  +slot('home')
+    p Lorem ipsum dolor sit amet.1
+  script.
+    (function (){
+      if(location.search){
+        let search = location.search.substring(1);
+        let queryStr =JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}', function(key, value) { return key===""?value:decodeURIComponent(value) })
+        let activeList = queryStr.list
+        $('#list-'+activeList+'-list').tab('show')
+      }
+    })()
+
+mixin search-bar()
+  style.
+    .collapse-bar{
+      position: relative;
+      z-index: 1000
+    }
+    .collapse-action{
+      position: absolute;
+      width: 0%;
+      overflow: hidden;
+      transition: width .5s
+    }
+    .collapse-bar.active .collapse-action{
+      width: 100%
+    }
+
+  button#toggleSearchBar(type="button", data-target="#searchBar") 搜尋列
+  .collapse-bar#searchBar
+    .collapse-action
+      .collapse-content(data-ref="#searchBar")
+        form.input-group.stretch-input.active(action='#', method='post')
+          input.form-control.bg-white.border.border-secondary.rounded-left.h-auto(type='text', placeholder='新光保全', aria-label='Text input with dropdown button', aria-describedby='searchBar')
+          .input-group-append
+            button.btn.btn-outline-secondary(type='button')
+              svg.mr-1(width='20', height='20', style='height: 20px;')
+                use(xlink:href='./img/sprite.svg#icon-search')
+            button#closeSearchBar.btn.btn-outline-secondary(type='button' data-target="#searchBar") &times;
+    script.
+      function SEL (el){
+        return document.querySelector(el)
+      }
+      function SELA (el){
+        return document.querySelectorAll(el)
+      }
+      SELA('.collapse-content').forEach((el)=>{
+        let ref = SEL(el.dataset.ref)
+        let style =getComputedStyle(ref, null)
+        let {width,paddingLeft:pl,paddingRight:pr} = style
+        let contentWidth = width.replace('px', '')-pl.replace('px', '')-pr.replace('px', '')
+        el.style.width = contentWidth +'px'
+      })
+      SEL('#toggleSearchBar').addEventListener('click',function(e){
+        SEL(this.dataset.target).classList.add('active')
+      })
+      SEL('#closeSearchBar').addEventListener('click',function(e){
+        SEL(this.dataset.target).classList.remove('active')
+      })

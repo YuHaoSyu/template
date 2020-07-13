@@ -1,0 +1,9 @@
+mixin jsonBreadcrumb(items)
+  -let jsonld ={'@context':'https://schema.org/','@type':'BreadcrumbList'}
+  -let itemListElement =[]
+  each item, index in items
+    -let obj ={'@type': 'ListItem',position: index,name: item.n,item:item.href}
+    -itemListElement.push(obj)
+  -jsonld.itemListElement=itemListElement
+  script(type="application/ld+json")!=JSON.stringify(jsonld)
+//- +jsonBreadcrumb( [{href:'#',n:'Home'},{href:'#',n:'Library'}])

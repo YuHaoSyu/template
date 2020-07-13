@@ -1,0 +1,46 @@
+%inline-block-solid
+  display: inline-block
+  border-style: solid
+
+=triangle($dir,$w,$h,$color)
+  @extend %inline-block-solid
+  $t: transparent
+  @if $dir=='top'
+    border-width: 0 $w $h
+    border-color: $t $t $color
+  @else if $dir == 'right'
+    border-width: $h 0 $h $w
+    border-color: $t $t $t $color
+  @else if $dir == 'btn' or $dir == 'bottom'
+    border-width: $h $w 0
+    border-color: $color $t $t
+  @else if $dir == 'left'
+    border-width: $h $w $h 0
+    border-color: $t $color $t $t
+
+=arrow($dir,$area,$color)
+  @extend %inline-block-solid
+  width: $area
+  height: $area
+  border-color: $color
+  @if $dir=='top'
+    border-right: 0px
+    border-bottom: 0px
+  @else if $dir == 'right'
+    border-top: 0px
+    border-right: 0px
+  @else if $dir == 'btn' or $dir == 'bottom'
+    border-top: 0px
+    border-left: 0px
+  @else if $dir == 'left'
+    border-bottom: 0px
+    border-left: 0px
+
+=circle($diameter,$stroke-w,$stroke,$fill: false)
+  display: inline-block
+  width: $diameter
+  height: $diameter
+  border: $stroke-w solid $stroke
+  border-radius: 50%
+  @if $fill
+    background-color: $fill

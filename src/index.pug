@@ -1,0 +1,9 @@
+include ./template/_layout.pug
+mixin content
+  |
+doctype html
++layout('index')
+
+
+  +slot('body')
+    +content

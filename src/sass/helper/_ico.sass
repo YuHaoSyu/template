@@ -1,0 +1,11 @@
+%icon
+  display: inline-block
+  background-repeat: no-repeat
+  background-position: center center
+  background-size: contain
+
+@mixin icon($image, $width, $height: $width)
+  @extend %icon
+  width: $width
+  height: $height
+  background-image: url($image)

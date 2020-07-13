@@ -1,0 +1,35 @@
+mixin navDropdown(navDropdownId='navbarDropdown',catalog,dropdownItems)
+  li.nav-item.dropdown
+    a.nav-link.dropdown-toggle(id=navDropdownId, href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')=catalog
+    .dropdown-menu(aria-labelledby=navDropdownId)
+      each href, name in dropdownItems
+        a.dropdown-item(href=href)=name
+//- +navDropdown('navbarDropdown','catalog',{
+//-   '首頁':'index.html',
+//-   '產品':'product.html'
+//-   })
+mixin header(title)
+  header.fixed-top
+    .container
+      nav.navbar.navbar-expand-lg.navbar-light.bg-light
+        h1.text-hide
+          |
+          |
+          a(href="./index.html")=title
+            img(src="./img/logo.png", alt=title)
+        button.navbar-toggler(type="button" data-toggle="collapse" data-target="#mobileMenu" aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation")
+          |
+          |
+          span.navbar-toggler-icon
+        #mobileMenu.collapse.navbar-collapse
+          ul.navbar-nav.ml-auto
+            li.nav-item
+              a.nav-link(href="#") Link
+              +navDropdown('navbarDropdown','Dropdown',{
+                '首頁':'index.html',
+                '產品':'product.html'
+                })
+              +navDropdown('navbarDropdown2','Dropdown',{
+                '首頁':'index.html',
+                '產品':'product.html'
+                })

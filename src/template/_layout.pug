@@ -1,0 +1,37 @@
+include ./_seo.pug
+include ./_jsonld.pug
+include ./_module.pug
+include ./_meta
+include ./_header
+
+mixin layout(file)
+  -let slots = {};
+  -let{title, desc}= meta[file]
+  mixin slot(name)
+    -slots[name] = block
+  block
+
+
+  html(lang="zh-Hant-TW")
+    head
+      +meta(file,title,desc)
+      if slots.head
+        -slots.head()
+
+      if slots.includeStyle
+        -slots.includeStyle()
+
+      if slots.style
+          -slots.style()
+    body
+      +header(title)
+      if slots.body
+        -slots.body()
+      include ./_footer
+
+      script(src="./js/vendors.js")
+      if slots.includeScript
+        -slots.includeScript()
+      script(src="./js/script.js")
+      if slots.script
+        -slots.script()

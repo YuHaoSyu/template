@@ -1,0 +1,12 @@
+flex=> f
+justify-content =>jc
+align-items =>ai
+align-content =>ac
+align-self =>as
+
+
+font-weight-light => text-thin
+
+
+relative => rel
+absolute => abs

@@ -1,0 +1,11 @@
+// @each $breakpoint in map-keys($grid-breakpoints) {
+//   @include media-breakpoint-up($breakpoint) {
+//     $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    .tracking-tighter        { letter-spacing: -0.05rem !important; }
+    .tracking-tight          { letter-spacing: -0.025rem !important; }
+    .tracking-normal         { letter-spacing: 0 !important; }
+    .tracking-wide           { letter-spacing: 0.125rem !important; }
+    .tracking-wider          { letter-spacing: 0.25rem !important; }
+  // }
+// }

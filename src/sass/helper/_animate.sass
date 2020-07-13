@@ -1,0 +1,21 @@
+// https://animate.style/
+// https://github.com/animate-css/animate.css/tree/master/source
+
+.animated
+  animation-duration: 1s
+  animation-fill-mode: both
+.infinite
+  animation-iteration-count: infinite
+@for $i from 1 through 3
+  .delay-#{$i}s
+    animation-delay: #{$i}s//, 0s
+  .delay-#{$i}00ms
+    animation-delay: #{$i * 100}ms
+.fast
+  animation-duration: 700ms
+.faster
+  animation-duration: 500ms
+.slow
+  animation-duration: 2s
+.slower
+  animation-duration: 3s

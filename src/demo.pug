@@ -1,0 +1,233 @@
+doctype html
+-let web ='template'
+html(lang="en")
+  -
+    let pages = [
+          {name:'全站首頁',href:'./index.html'}
+          ]
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title=web + ' sitemap'
+
+    script(src="https://unpkg.com/sweetalert/dist/sweetalert.min.js")
+
+    style.
+      .d-none{
+        display:none
+      }
+      input{
+        width: 40px
+      }
+      html{
+        font-family: 微軟正黑體;
+        font-size: 0.75rem}
+      html,body{
+        padding:0;
+        margin:0;}
+      .sitemap{
+        /*position:fixed;*/
+        top:10vh;
+        left:0;
+        z-index:10000;
+        background-color: rgba(255,255,255,0.5);
+        padding:0px;}
+      .sitemap ,a{
+        color: rgba(0,0,0,0.5);
+        text-decoration:none;}
+      /* div{
+        font-weight:bold;
+        margin-bottom:10px
+        }*/
+      table{
+        border-collapse:collapse;
+        vertical-align:top;
+      }
+      table,th,tr{border: 1px solid}
+      tr:hover{background-color:#eee;}
+      th{text-align:left}
+      td{text-align:center}
+      .swal-modal{ width: auto;}
+  body
+    h1
+      a(href="http://"+web+".cmind.com.tw/" target="_blank") 測試站
+      |&nbsp;無痕瀏覽 ctrl + shift + N
+
+    label(for="defaultBp") 所有裝置
+    input#defaultBp(style="width:14px" type="checkbox")
+    label(for="czBp") 自訂裝置
+    input#czBp(style="width:14px" type="checkbox")
+    //- input#clipboard(value="" style="opacity:0")
+    table.sitemap
+      thead
+        tr
+          each th,i in ['page / breakpoint','new Tab','clipboard','all','360*512','768*1024','1024*768','1366*768']
+            th(class={'default-dev d-none':i>3})=th
+          th.cz-dev.d-none
+            select.bp-select
+              option(value="iphone6/7/8" data-width="375" data-height="667" selected) iphone6/7/8
+              option(value="iphone6/7/8+"  data-width="414" data-height="736") iphone6/7/8+
+              option(value="iphoneX" data-width="375" data-height="812" ) iphoneX
+              option(value="iPadPro" data-width="1024" data-height="1366" ) iPadPro
+              option(value="custom" data-width="" data-height="" ) Customize
+            input.cz-input.cz-width(type="number" placeholder='width' disabled value="375" data-size="width")
+            input.cz-input.cz-height(type="number" placeholder='height' disabled value="667" data-size="height")
+      tbody
+        each a,i in pages
+          tr
+            th=(i<9?'0':'') + (i+1) +' '+ a.name
+            //- td
+            //-   a(target="_blank" href=a.invision) pattern
+            td
+              a(target="_blank" href=a.href) auto
+            td
+              a.anchor.clipboard(target="_blank" href=a.href) copy
+            td
+              a.anchor.all-dev(href="#") all
+            td.default-dev.d-none
+              a.anchor.phone(href=a.href) 360
+            td.default-dev.d-none
+              a.anchor.md-h(href=a.href) 768
+            td.default-dev.d-none
+              a.anchor.md-v(href=a.href) 1024
+            td.default-dev.d-none
+              a.anchor.pc(href=a.href) 1366
+            td.cz-dev.d-none
+              a.anchor.for-select(href=a.href) User Select
+      div
+        a(href="http://127.0.0.1:3000/demo.html" style="color:#aaffaa") Local
+        a(href="http://whatlife.no-ip.org/test/"+web+"/demo.html" style="color:#ffaaaa") Static
+        a(href="http://192.168.0.89:3000/demo.html" style="color:#aaaaff") External
+      script.
+        let SEL = (selected) => document.querySelector(selected)
+        let SELA = (selected) => document.querySelectorAll(selected)
+        let browser = { width: '375', height: '668' }
+        let breakpoints = [
+          { bp: 'phone', name: '360px', cond: 'height=513, width=360' },
+          { bp: 'md-h', name: '768px', cond: 'height=1025, width=768, left=410' },
+          { bp: 'md-v', name: '1024px', cond: 'height=769, width=1024, left=1228' },
+          { bp: 'pc', name: '1366px', cond: 'height=769, width=1366, left=1228, top=1000' }
+        ]
+        SELA('.anchor').forEach((el) => {
+          let bp = el.className.split(' ')[1]
+          el.addEventListener('click', function (e) {
+            e.preventDefault()
+            let breakpoint = breakpoints.find(e => e.bp === bp)
+            if (breakpoint) {
+              open(e.target.href, breakpoint.name, (config = breakpoint.cond))
+            } else if (bp === 'clipboard') {
+              let clipboard = document.createElement('textarea')
+              clipboard.value = this.href
+              document.body.appendChild(clipboard)
+              clipboard.select()
+              document.execCommand('copy')
+              document.body.removeChild(clipboard)
+              swal(`已複製超連結，請開啟無痕瀏覽。`, {
+                title: this.href,
+                icon: 'success',
+                buttons: false,
+                timer: 3000,
+              })
+            } else if (bp === 'all-dev') {
+              let sib = this.parentNode
+              for (let i = 0; i < 4; i++) {
+                sib = sib.nextElementSibling
+                sib.firstElementChild.click()
+              }
+            } else if (bp === 'for-select') {
+              if (!browser.width) {
+                alert('請輸入裝置寬度')
+                SEL('.cz-width').focus()
+              } else if (!browser.height) {
+                alert('請輸入裝置高度')
+                SEL('.cz-height').focus()
+              } else {
+                open(e.target.href, 'custom', (config = 'height=' + browser.height + ', width=' + browser.width))
+              }
+            }
+          })
+        })
+        SEL('.bp-select').addEventListener('change', function (e) {
+          let target = e.target
+          SELA('.cz-input').forEach(function (inputbox) {
+            inputbox.disabled = target.value !== 'custom'
+          })
+          let children = [...target.children]
+          children.forEach(function (option) {
+            if (option.selected) {
+              browser = { ...option.dataset }
+            }
+          })
+          for (const key in browser) {
+            SEL('.cz-' + key).value = browser[key]
+          }
+        })
+        SELA('.cz-input').forEach(el => {
+          el.addEventListener('blur', function (e) {
+            let size = e.target.dataset.size
+            if (size === 'width') {
+              browser.width = e.target.value
+            } else if (size === 'height') {
+              browser.height = +e.target.value + 1
+            }
+          })
+        })
+        SEL('#czBp').addEventListener('change', function (e) {
+          SELA('.cz-dev').forEach((el) => {
+            el.classList[e.target.checked ? 'remove' : 'add']('d-none')
+          })
+        })
+        SEL('#defaultBp').addEventListener('change', function (e) {
+          SELA('.default-dev').forEach((el) => {
+            el.classList[e.target.checked ? 'remove' : 'add']('d-none')
+          })
+        })
+
+      //- script.
+        document.addEventListener('DOMContentLoaded', function () {
+          document.getElementById('alt-n').addEventListener('click', function () {
+            // create a new keyboard event
+            var event = new KeyboardEvent('keydown', {
+              key: 'n',
+              altKey: true
+            });
+            // dispatch the alt+n key press event
+            document.dispatchEvent(event);
+          });
+
+          document.getElementById('ctrl-g').addEventListener('click', function () {
+            // create a new keyboard event
+            var event = new KeyboardEvent('keydown', {
+              key: 'g',
+              ctrlKey: true
+            });
+            // dispatch the ctrl+g key press event
+            document.dispatchEvent(event);
+          });
+
+          // listen for any key presses
+          document.addEventListener('keydown', function (e) {
+            if (e.altKey || e.ctrlKey) {
+              // alt or ctrl is pressed
+              console.log('Key: ' + e.key + '; alt pressed: ' + e.altKey + '; ctrl pressed: ' + e.ctrlKey);
+            }
+          });
+        });
+    //- div(style="display:inline-block")
+      h1 小裝置模擬
+      p 按 F12 開啟開發者工具
+      div(style="margin-bottom:20px;border:1px solid;padding:5px")
+        img(src="../img/devTool.jpg", alt="")
+      p 瀏覽器選擇裝置
+      div(style="margin-bottom:20px;border:1px solid;padding:5px")
+        img(src="../img/deviceTool.jpg", alt="")
+    //- -for(let i = 0; i <150; i++)
+      div(style='font-size:'+ Math.round((0.875+i*0.025)*1000)/1000+'rem')=Math.round((0.875+i*0.025)*1000)/1000 + 'rem'
+        div 一二三四五六七八九十一二三四五六七
+        div ABCDEFG
+    //- br
+    //- h4(style="margin-bottom:0") 內容暫時一樣
+    //- ul
+    //- br
+    //- h4(style="margin-bottom:0") 未完成
+    //- ul

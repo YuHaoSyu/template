@@ -1,0 +1,85 @@
+// stylelint-disable declaration-no-important
+
+//
+// Text
+//
+
+.text-monospace { font-family: $font-family-monospace !important; }
+
+// Alignment
+
+.text-justify  { text-align: justify !important; }
+.text-wrap     { white-space: normal !important; }
+.text-nowrap   { white-space: nowrap !important; }
+.text-truncate { @include text-truncate; }
+
+// Responsive alignment
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    .text#{$infix}-left   { text-align: left !important; }
+    .text#{$infix}-right  { text-align: right !important; }
+    .text#{$infix}-center { text-align: center !important; }
+  }
+}
+
+// Transformation
+
+.text-lowercase  { text-transform: lowercase !important; }
+.text-uppercase  { text-transform: uppercase !important; }
+.text-capitalize { text-transform: capitalize !important; }
+
+// Weight and italics
+
+.text-thin   { font-weight: $font-weight-light !important; }
+.text-thinner { font-weight: $font-weight-lighter !important; }
+.text-normal  { font-weight: $font-weight-normal !important; }
+.text-bold    { font-weight: $font-weight-bold !important; }
+.text-bolder  { font-weight: $font-weight-bolder !important; }
+.text-italic         { font-style: italic !important; }
+
+// Contextual colors
+
+.text-white { color: $white !important; }
+.text-black { color: $black !important; }
+@each $color, $value in $theme-colors {
+  @include text-emphasis-variant(".text-#{$color}", $value);
+}
+
+.text-body { color: $body-color !important; }
+.text-muted { color: $text-muted !important; }
+
+.text-black-50 { color: rgba($black, .5) !important; }
+.text-white-50 { color: rgba($white, .5) !important; }
+
+// Misc
+
+.text-hide {
+  @include text-hide($ignore-warning: true);
+}
+
+.text-decoration-none { text-decoration: none !important; }
+
+.text-break {
+  word-break: break-word !important; // IE & < Edge 18
+  overflow-wrap: break-word !important;
+}
+
+// Reset
+
+.text-reset { color: inherit !important; }
+
+
+.tracking-tighter        { letter-spacing: -0.2rem !important; }
+.tracking-tight          { letter-spacing: -0.1rem !important; }
+.tracking-normal         { letter-spacing: 0 !important; }
+.tracking-wide           { letter-spacing: 0.125rem !important; }
+.tracking-wider          { letter-spacing: 0.25rem !important; }
+
+.leading-none           { line-height: 1 !important; }
+.leading-tight          { line-height: 1.2 !important; }
+.leading-normal         { line-height: 1.5 !important; }
+.leading-relaxed        { line-height: 1.8 !important; }
+.leading-loose          { line-height: 2 !important; }

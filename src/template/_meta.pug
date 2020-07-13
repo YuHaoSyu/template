@@ -1,0 +1,59 @@
+mixin meta(page,title,desc)
+  -let searchBarColor = '#000'
+  //-[產品名稱] - [產品類別] | [品牌] 30字
+  //-品牌|主要產品類別 - 次要產品類別 - 產品名稱
+  //-desc 160個
+  title=title
+  meta(name='description' content=desc)
+  meta(charset='UTF-8')
+  meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+  meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=no')
+  meta(property='og:title' content=title)
+  meta(property='og:description', content=desc)
+  //- A short description of min. 2 max. 4 sentences
+  meta(property='og:image' content='./img/og.jpg')
+  //- The URL of the image, at least 600x315 pixels, preferable 1200x630 pixels
+  meta(property='og:url' content='http://whatlife.no-ip.org/'+page+'.html')
+  meta(property='og:locale' content='zh-Hant-TW')
+  meta(property='og:type' content='website')
+  meta(property='og:site_name' content=title)
+  meta(name='twitter:title', content=title)
+  //-  A brief but comprehensive title of max. 70 characters
+  meta(name='twitter:description', content=desc)
+
+  //- A brief description of the tweet max. 200 characters. Do not re-use the title as the description
+  meta(name='twitter:image' content='./img/og.jpg')
+  //- Add a unique not a generic image representing the content at least 280x150 pixels
+  //- meta(name='twitter:card' content='')
+  //- summery_large_image
+
+  //- meta(name='author' content='YuHaoSyu')
+  //- meta(name='company' content='思脈數位股份有限公司')
+  //- meta(name='copyright' content=''')
+  //- meta(name='robots' content='index, nofollow')
+
+  //- meta(name='twitter:site' content='')
+  //- meta(name='Distribution' content='Taiwan')
+  //- meta(name='revisit-after' content='1 days')
+  //- meta(http-equiv='expires' content='0')
+  meta(name='theme-color' content=searchBarColor)
+  meta(name='msapplication-navbutton-color' content=searchBarColor)
+  meta(name='apple-mobile-web-app-status-bar-style' content=searchBarColor)
+  link(rel='canonical' href='http://whatlife.no-ip.org/'+page+'.html')
+  //- link(rel="apple-touch-icon-precomposed" sizes="57x57" href="../img/apple-touch-icon-57x57.png")
+  //- link(rel="apple-touch-icon-precomposed" sizes="60x60" href="../img/apple-touch-icon-60x60.png")
+  //- link(rel="apple-touch-icon-precomposed" sizes="72x72" href="../img/apple-touch-icon-72x72.png")
+  //- link(rel="apple-touch-icon-precomposed" sizes="76x76" href="../img/apple-touch-icon-76x76.png")
+  //- link(rel="apple-touch-icon-precomposed" sizes="114x114" href="../img/apple-touch-icon-114x114.png")
+  //- link(rel="apple-touch-icon-precomposed" sizes="120x120" href="../img/apple-touch-icon-120x120.png")
+  //- link(rel="apple-touch-icon-precomposed" sizes="144x144" href="../img/apple-touch-icon-144x144.png")
+  //- link(rel="apple-touch-icon-precomposed" sizes="152x152" href="../img/apple-touch-icon-152x152.png")
+  //- link(rel="apple-touch-icon-precomposed" sizes="180x180" href="../img/apple-touch-icon-180x180.png")
+
+  //- link(rel='manifest' href='manifest.json')
+  //- link(rel='icon' sizes='192x192' href='appIcon.png')
+  //- link(rel='icon' sizes='128x128' href='niceicon.png')
+  //- link(rel='apple-touch-icon' sizes='128x128' href='niceicon.png')
+  //- link(rel='apple-touch-icon-precomposed' sizes='128x128' href='niceicon.png')
+  link(rel='icon', href='./img/favicon.ico', type='image/x-icon')
+  link(rel='stylesheet', href='../css/style.css')

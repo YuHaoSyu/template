@@ -1,0 +1,49 @@
+// $bg-gray: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f
+// @each $gray in $bg-gray
+//   .bg-gray-#{$gray}
+//     background-color: #{'#'+$gray}#{$gray}#{$gray}
+
+
+
+// $txt-gray: 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e
+// @for $gray from 1 through 14
+//   .txt-gray-#{$gray}
+//     color: #{'#'+nth($txt-gray,$gray)+nth($txt-gray,$gray)+nth($txt-gray,$gray)}
+
+// $border-gray: 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e
+// @for $gray from 1 through 14
+//   .border-top-gray-#{$gray},
+//   .border-y-gray-#{$gray}
+//     border-top: #{'#'+nth($border-gray,$gray)+nth($border-gray,$gray)+nth($txt-gray,$gray)}
+//   .border-right-gray-#{$gray},
+//   .border-x-gray-#{$gray}
+//     border-right: #{'#'+nth($border-gray,$gray)+nth($border-gray,$gray)+nth($txt-gray,$gray)}
+
+//   .border-bottom-gray-#{$gray},
+//   .border-y-gray-#{$gray}
+//     border-bottom: #{'#'+nth($border-gray,$gray)+nth($border-gray,$gray)+nth($txt-gray,$gray)}
+
+//   .border-left-gray-#{$gray},
+//   .border-x-gray-#{$gray}
+//     border-left: #{'#'+nth($border-gray,$gray)+nth($border-gray,$gray)+nth($txt-gray,$gray)}
+
+
+// =divider($width,$color)
+//   > * + *
+//     border-left: $width solid $color
+// .divider-2-col
+//   > :nth-child(2n)
+//     border-left: 1px solid red
+
+// .divider-md-3-col
+//   +media-breakpoint-up(md)
+//     > :nth-child(n)
+//       border-left: 0px
+//     > :not(:nth-child(3n - 2))
+//       border-left: 1px solid green
+// .divider-lg-4-col
+//   +media-breakpoint-up(lg)
+//     > :nth-child(n)
+//       border-left: 0px
+//     > :not(:nth-child(4n - 3))
+//       border-left: 1px solid blue
