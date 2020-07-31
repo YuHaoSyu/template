@@ -65,5 +65,29 @@
     "last 1 version",
     "IE 10",
     "> 5%"
-  ]
+  ],
+  "babel":{
+    "presets": ["@babel/preset-env"]
+  },
+  "eslintConfig":{
+    "env": {
+      "browser": true,
+      "es6": true
+    },
+    "extends": [
+      "standard"
+    ],
+    "globals": {
+      "Atomics": "readonly",
+      "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+      "ecmaVersion": 2018,
+      "sourceType": "module"
+    }
+  },
+  "prettier":{
+    "singleQuote": true,
+    "semi": false
+  }
 }
