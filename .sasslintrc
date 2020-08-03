@@ -114,7 +114,7 @@
     "no-color-keywords": 1,
     "no-color-literals": 0,
     "no-css-comments": 1,
-    "no-debug": 1,
+    "no-debug": 0,
     "no-duplicate-properties": 1,
     "no-empty-rulesets": 1,
     "no-extends": 0,
@@ -401,7 +401,8 @@
         "include": true
       }
     ],
-    "space-after-comma": 0,
+    "space-after-comma": 1,
+    "space-around-operator": 1,
     "space-before-bang": [
       1,
       {
@@ -436,6 +437,6 @@
         "convention": "hyphenatedbem"
       }
     ],
-    "zero-unit": 0
+    "zero-unit": 1
   }
 }
