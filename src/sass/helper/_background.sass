@@ -1,19 +1,17 @@
-.bg-cover,
-.bg-conatin.bg-fixed
+$bg-type: cover, contain, fixed
+%bg-default
   background:
     position: center
     repeat: no-repeat
-.bg-cover
-  background-size: cover
-.bg-contain
-  background-size: contain
-.bg-fixed
-  background-attachment: fixed
-.bg-top
-  background-position-y: top
-.bg-right
-  background-position-x: right
-.bg-bottom
-  background-position-y: bottom
-.bg-left
-  background-position-x: left
+
+@each $type in $bg-type
+  .bg-#{$type}
+    @extend %bg-default
+    background-#{if($type == 'fixed', 'attachment', 'size')}: $type
+
+@each $bg-position in $positions
+  $index: index($positions, $bg-position)
+  .bg-#{$bg-position}
+    background-position-#{if($index < 3, 'x', 'y')}: $bg-position
+  .bg-center-#{$bg-position}
+    background-position: center #{$bg-position}

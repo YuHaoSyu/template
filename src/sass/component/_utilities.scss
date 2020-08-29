@@ -1,19 +1,56 @@
+$display: false;
+$flex: false;
+$float: false;
+$leading: false;
+$spacing: false;
+$text-align: false;
+$tracking: false;
+
+$print: false;
 @import "utilities/align";
 @import "utilities/background";
 @import "utilities/borders";
-@import "utilities/clearfix";
+// @import "utilities/clearfix";
 @import "utilities/display";
-@import "utilities/embed";
+// @import "utilities/embed";
 @import "utilities/flex";
-@import "utilities/float";
-@import "utilities/leading";
+// @import "utilities/float";
+// @import "utilities/interactions";
+// @import "utilities/leading";
 @import "utilities/overflow";
-@import "utilities/position";
-@import "utilities/screenreaders";
-@import "utilities/shadows";
+// @import "utilities/position";
+// @import "utilities/screenreaders";
+// @import "utilities/shadows";
 @import "utilities/sizing";
-@import "utilities/stretched-link";
+// @import "utilities/stretched-link";
 @import "utilities/spacing";
 @import "utilities/text";
-@import "utilities/tracking";
-@import "utilities/visibility";
+// @import "utilities/tracking";
+// @import "utilities/visibility";
+
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+    @if $display      { @include display($infix);      }
+    @if $flex         { @include flex($infix);         }
+    @if $float        { @include float($infix);        }
+    @if $spacing      { @include spacing($infix);      }
+    @if $text-align   { @include text-align($infix);   }
+
+    @include divider($infix, $bp: -s, $cols: 2, $color: #0f0, $spacing: 50px);
+  }
+}
+
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-down($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    $next: breakpoint-next($breakpoint, $grid-breakpoints);
+    $infix-next:  breakpoint-infix($next, $grid-breakpoints);
+    @if $leading      { @include leading($infix);      }
+    @if $tracking     { @include tracking($infix);     }
+    @if $enable-rwd-table { @include table-rwd($infix-next) }
+  }
+}

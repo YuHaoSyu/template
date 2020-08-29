@@ -1,0 +1,18 @@
+=create-btn($config...)
+  $bg: map-get(keywords($config), 'bg') or $white
+  $border: map-get(keywords($config), 'border') or $white
+  $color: map-get(keywords($config), 'color') or color-yiq($bg)
+  $hover-bg: map-get(keywords($config), 'border') or darken($bg, 7.5%)
+  $hover-border: map-get(keywords($config), 'hover-border')
+  $active-bg: map-get(keywords($config), 'border') or darken($bg, 10%)
+  $active-border: map-get(keywords($config), 'bactive-border') or darken($border, 12.5%)
+  @extend .btn
+  +button-variant($bg, $border, $hover-bg, $hover-border, $active-bg, $active-border, $color)
+
+=create-btn-outline($config...)
+  $color: map-get(keywords($config), 'color') or $white
+  $color-hover: map-get(keywords($config), 'color-hover') or color-yiq($color)
+  $active-bg: map-get(keywords($config), 'active-bg') or $color
+  $active-border: map-get(keywords($config), 'active-border') or $color
+  @extend .btn
+  +button-outline-variant($color, $color-hover, $active-bg, $active-border)

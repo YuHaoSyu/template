@@ -1,4 +1,4 @@
-
+$dash-border: "data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 150'%3E%3Cpath d='M0 1h150m-1-1v150m1-1H0m1 1V0' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-dasharray='1,6,8,6,1,6' stroke-dashoffset='-3'/%3E%3C/svg%3E" 150px 150px;
 
 @mixin inline-svg($name) {
 	background: url(nth($name, 1)) center no-repeat;

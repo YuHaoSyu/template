@@ -84,7 +84,7 @@
 
 .table-hover {
   tbody tr {
-    @include hover {
+    @include hover() {
       color: $table-hover-color;
       background-color: $table-hover-bg;
     }
@@ -96,12 +96,13 @@
 //
 // Exact selectors below required to override `.table-striped` and prevent
 // inheritance to nested tables.
-
+@if $enable-customize-table {
 @each $color, $value in $theme-colors {
   @include table-row-variant($color, theme-color-level($color, $table-bg-level), theme-color-level($color, $table-border-level));
 }
-
 @include table-row-variant(active, $table-active-bg);
+}
+
 
 
 // Dark styles
@@ -109,6 +110,7 @@
 // Same table markup, but inverted color scheme: dark background and light text.
 
 // stylelint-disable-next-line no-duplicate-selectors
+@if $enable-table-thead-style {
 .table {
   .thead-dark {
     th {
@@ -126,7 +128,8 @@
     }
   }
 }
-
+}
+@if $enable-table-dark-style {
 .table-dark {
   color: $table-dark-color;
   background-color: $table-dark-bg;
@@ -142,19 +145,20 @@
   }
 
   &.table-striped {
-    tbody tr:nth-of-type(odd) {
+    tbody tr:nth-of-type(#{$table-striped-order}) {
       background-color: $table-dark-accent-bg;
     }
   }
 
   &.table-hover {
     tbody tr {
-      @include hover {
+      @include hover() {
         color: $table-dark-hover-color;
         background-color: $table-dark-hover-bg;
       }
     }
   }
+}
 }
 
 
@@ -162,40 +166,43 @@
 //
 // Generate series of `.table-responsive-*` classes for configuring the screen
 // size of where your table will overflow.
-$table-responsive: 110, 120;
-.table-responsive {
-  @each $breakpoint in map-keys($grid-breakpoints) {
-    $next: breakpoint-next($breakpoint, $grid-breakpoints);
-    $infix: breakpoint-infix($next, $grid-breakpoints);
+// @each $breakpoint in map-keys($grid-breakpoints) {
+//   @include media-breakpoint-down($breakpoint) {
+//   $next: breakpoint-next($breakpoint, $grid-breakpoints);
+//   $infix: breakpoint-infix($next, $grid-breakpoints);
 
+//   }
+// }
+
+$enable-rwd-table: true;
+@mixin table-rwd ($infix){
+  .table-rwd {
     &#{$infix} {
-      @include media-breakpoint-down($breakpoint) {
-        display: block;
-        width: 100%;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-
-        // Prevent double border on horizontal scroll due to use of `display: block;`
-        > .table-bordered {
-          border: 0;
-        }
-        @each $width in $table-responsive {
-          &-#{$width}{
-            width: #{$width+'%'};
-          }
+      display: block;
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      // Prevent double border on horizontal scroll due to use of `display: block;`
+      > .table-bordered {
+        border: 0;
+      }
+    }
+    @each $width in $table-responsive-width {
+      &#{$infix}-#{$width} {
+      @extend .table-rwd#{$infix};
+        .table{
+          width: #{$width+'%'};
         }
       }
     }
   }
 }
-
-@each $align, $cols in $table-align{
-  @each $column in  $cols{
-    .col-#{$column}-#{$align}{
-      th,
-      td{
-        &:nth-child(#{$column}){
-          @extend .text-#{$align}
+@each $align, $cols in $table-aligns{
+  @each $col in  $cols{
+    .nth-#{$col}-#{$align} {
+      tr{
+        > :nth-child(#{$col}){
+          @extend .txt-#{$align};
         }
       }
     }

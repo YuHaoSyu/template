@@ -8,18 +8,38 @@
   visibility: hidden
   max-height: 0
   opacity: 0
-  transition: max-height  .3s ,opacity 0s .15s
+  transition: max-height  .3s, opacity 0s .15s
 =dropdown($height: 300px)
   visibility: visible
   max-height: $height
   opacity: 1
 .z-top
   z-index: 2000
-@import './scrollbar'
+$positions: top, bottom, right, left
+$mask-alpha: ('black': (), 'white': ())
+
+
+
+// .list-nest-counter
+//   ol
+//     counter-reset: item
+//     padding-inline-start: 1rem
+//   > ol
+//     padding-inline-start: 0
+//   li
+//     display: block
+//     &::before
+//       content: counters(item, '.') ' '
+//       counter-increment: item
+
+// @import './scrollbar'
 @import './background'
 // @import './animate'
+
 @import './color'
 @import './shape'
 @import './component'
+@import './inset'
+@import './limited-lines'
 @import './ico'
 @import './mask'

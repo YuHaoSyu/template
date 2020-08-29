@@ -1,3 +1,7 @@
+=placeholder($color: $primary, $alpha: .5)
+  &::placeholder
+    color: rgba($color, $alpha) !important
+
 // $bg-gray: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f
 // @each $gray in $bg-gray
 //   .bg-gray-#{$gray}
@@ -28,12 +32,16 @@
 //     border-left: #{'#'+nth($border-gray,$gray)+nth($border-gray,$gray)+nth($txt-gray,$gray)}
 
 
-// =divider($width,$color)
+// =divider($width, $color)
 //   > * + *
 //     border-left: $width solid $color
-// .divider-2-col
-//   > :nth-child(2n)
-//     border-left: 1px solid red
+
+
+
+
+// .content-#{2}
+//   &.divider> :nth-child(2)
+//     border-left: 2px solid #f00
 
 // .divider-md-3-col
 //   +media-breakpoint-up(md)

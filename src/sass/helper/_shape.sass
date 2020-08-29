@@ -2,10 +2,10 @@
   display: inline-block
   border-style: solid
 
-=triangle($dir,$w,$h,$color)
+=triangle($dir, $w, $h, $color)
   @extend %inline-block-solid
   $t: transparent
-  @if $dir=='top'
+  @if $dir == 'top'
     border-width: 0 $w $h
     border-color: $t $t $color
   @else if $dir == 'right'
@@ -18,25 +18,25 @@
     border-width: $h $w $h 0
     border-color: $t $color $t $t
 
-=arrow($dir,$area,$color)
+=arrow($dir, $area, $color)
   @extend %inline-block-solid
   width: $area
   height: $area
   border-color: $color
-  @if $dir=='top'
-    border-right: 0px
-    border-bottom: 0px
+  @if $dir == 'top'
+    border-right: none
+    border-bottom: none
   @else if $dir == 'right'
-    border-top: 0px
-    border-right: 0px
+    border-top: none
+    border-right: none
   @else if $dir == 'btn' or $dir == 'bottom'
-    border-top: 0px
-    border-left: 0px
+    border-top: none
+    border-left: none
   @else if $dir == 'left'
-    border-bottom: 0px
-    border-left: 0px
+    border-bottom: none
+    border-left: none
 
-=circle($diameter,$stroke-w,$stroke,$fill: false)
+=circle($diameter, $stroke-w, $stroke, $fill: false)
   display: inline-block
   width: $diameter
   height: $diameter
@@ -44,3 +44,5 @@
   border-radius: 50%
   @if $fill
     background-color: $fill
+%rect
+  padding: 50% 0

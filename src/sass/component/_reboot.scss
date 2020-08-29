@@ -1,3 +1,21 @@
+// stylelint-disable at-rule-no-vendor-prefix, declaration-no-important, selector-no-qualifying-type, property-no-vendor-prefix
+
+// Reboot
+//
+// Normalization of HTML elements, manually forked from Normalize.css to remove
+// styles targeting irrelevant browsers while applying new styles.
+//
+// Normalize is licensed MIT. https://github.com/necolas/normalize.css
+
+
+// Document
+//
+// 1. Change from `box-sizing: content-box` so that `width` is not affected by `padding` or `border`.
+// 2. Change the default font family in all browsers.
+// 3. Correct the line height in all browsers.
+// 4. Prevent adjustments of font size after orientation changes in IE on Windows Phone and in iOS.
+// 5. Change the default tap highlight to be completely transparent in iOS.
+
 *,
 *::before,
 *::after {
@@ -5,27 +23,25 @@
 }
 
 html {
-  // font-family: sans-serif; // 2
-  // line-height: 1.15; // 3
-  // -webkit-text-size-adjust: 100%; // 4
+  font-family: sans-serif; // 2
+  line-height: 1.15; // 3
+  -webkit-text-size-adjust: 100%; // 4
   -webkit-tap-highlight-color: rgba($black, 0); // 5
 }
 
 // Shim for "new" HTML5 structural elements to display correctly (IE10, older browsers)
 // TODO: remove in v5
 // stylelint-disable-next-line selector-list-comma-newline-after
-article,
-aside,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-main,
-nav,
-section {
+article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block;
 }
+
+// Body
+//
+// 1. Remove the margin in all browsers.
+// 2. As a best practice, apply a default `background-color`.
+// 3. Set an explicit initial text-align value so that we can later use
+//    the `inherit` value on things like `<th>` elements.
 
 body {
   margin: 0; // 1
@@ -38,25 +54,31 @@ body {
   background-color: $body-bg; // 2
 }
 
-// Suppress the focus outline on elements that cannot be accessed via keyboard.
-// This prevents an unwanted focus outline from appearing around elements that
-// might still respond to pointer events.
+// Future-proof rule: in browsers that support :focus-visible, suppress the focus outline
+// on elements that programmatically receive focus but wouldn't normally show a visible
+// focus outline. In general, this would mean that the outline is only applied if the
+// interaction that led to the element receiving programmatic focus was a keyboard interaction,
+// or the browser has somehow determined that the user is primarily a keyboard user and/or
+// wants focus outlines to always be presented.
 //
-// Credit: https://github.com/suitcss/base
-[tabindex="-1"]:focus {
+// See https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible
+// and https://developer.paciellogroup.com/blog/2018/03/focus-visible-and-backwards-compatibility/
+[tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;
 }
+
 
 // Content grouping
 //
 // 1. Add the correct box sizing in Firefox.
 // 2. Show the overflow in Edge and IE.
 
-// hr {
-//   box-sizing: content-box; // 1
-//   height: 0; // 1
-//   overflow: visible; // 2
-// }
+hr {
+  box-sizing: content-box; // 1
+  height: 0; // 1
+  overflow: visible; // 2
+}
+
 
 //
 // Typography
@@ -67,15 +89,9 @@ body {
 // By default, `<h1>`-`<h6>` all receive top and bottom margins. We nuke the top
 // margin for easier control within type scales as it avoids margin collapsing.
 // stylelint-disable-next-line selector-list-comma-newline-after
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
-  // margin-bottom: $headings-margin-bottom;
-  margin-bottom: 0;
+  margin-bottom: $headings-margin-bottom;
 }
 
 // Reset margins on paragraphs
@@ -84,7 +100,10 @@ h6 {
 // bottom margin to use `rem` units instead of `em`.
 p {
   margin-top: 0;
-  margin-bottom: $paragraph-margin-bottom;
+  margin-bottom: 0;
+  & + p {
+    margin-top: $paragraph-margin-top;
+  }
 }
 
 // Abbreviations
@@ -95,14 +114,16 @@ p {
 // 4. Remove the bottom border in Firefox 39-.
 // 5. Prevent the text-decoration to be skipped.
 
-// abbr[title],
-// abbr[data-original-title] { // 1
-//   text-decoration: underline; // 2
-//   text-decoration: underline dotted; // 2
-//   cursor: help; // 3
-//   border-bottom: 0; // 4
-//   text-decoration-skip-ink: none; // 5
-// }
+@if $enable-abbreviations {
+  abbr[title],
+  abbr[data-original-title] { // 1
+    text-decoration: underline; // 2
+    text-decoration: underline dotted; // 2
+    cursor: help; // 3
+    border-bottom: 0; // 4
+    text-decoration-skip-ink: none; // 5
+  }
+}
 
 address {
   margin-bottom: 1rem;
@@ -124,23 +145,28 @@ ul ol {
   margin-bottom: 0;
 }
 
-// dt {
-//   font-weight: $dt-font-weight;
-// }
+strong {
+  font-weight: $font-weight-bolder; // Add the correct font weight in Chrome, Edge, and Safari
+}
 
-// dd {
-//   margin-bottom: .5rem;
-//   margin-left: 0; // Undo browser default
-// }
+@if $enable-define {
+  dt {
+    font-weight: $dt-font-weight;
+  }
 
-// blockquote {
-//   margin: 0 0 1rem;
-// }
+  dd {
+    margin-bottom: .5rem;
+    margin-left: 0; // Undo browser default
+  }
 
-// b,
-// strong {
-//   font-weight: $font-weight-bolder; // Add the correct font weight in Chrome, Edge, and Safari
-// }
+  blockquote {
+    margin: 0 0 1rem;
+  }
+
+  b {
+    @extend strong
+  }
+}
 
 small {
   @include font-size(80%); // Add the correct font size in all browsers
@@ -159,12 +185,9 @@ sup {
   vertical-align: baseline;
 }
 
-sub {
-  bottom: -0.25em;
-}
-sup {
-  top: -0.5em;
-}
+sub { bottom: -.25em; }
+sup { top: -.5em; }
+
 
 //
 // Links
@@ -175,52 +198,53 @@ a {
   text-decoration: $link-decoration;
   background-color: transparent; // Remove the gray background on active links in IE 10.
 
-  @include hover {
+  @include hover() {
     color: $link-hover-color;
     text-decoration: $link-hover-decoration;
   }
 }
 
-// And undo these styles for placeholder links/named anchors (without href)
-// which have not been made explicitly keyboard-focusable (without tabindex).
+// And undo these styles for placeholder links/named anchors (without href).
 // It would be more straightforward to just use a[href] in previous block, but that
 // causes specificity issues in many other styles that are too complex to fix.
 // See https://github.com/twbs/bootstrap/issues/19402
 
-a:not([href]):not([tabindex]) {
+a:not([href]):not([class]) {
   color: inherit;
   text-decoration: none;
 
-  @include hover-focus {
+  @include hover() {
     color: inherit;
     text-decoration: none;
   }
-
-  &:focus {
-    outline: 0;
-  }
 }
+
 
 //
 // Code
 //
+@if $enable-code {
+  pre,
+  code,
+  kbd,
+  samp {
+    font-family: $font-family-monospace;
+    @include font-size(1em); // Correct the odd `em` font sizing in all browsers.
+  }
 
-// pre,
-// code,
-// kbd,
-// samp {
-//   font-family: $font-family-monospace;
-//   @include font-size(1em); // Correct the odd `em` font sizing in all browsers.
-// }
+  pre {
+    // Remove browser default top margin
+    margin-top: 0;
+    // Reset browser default of `1em` to use `rem`s
+    margin-bottom: 1rem;
+    // Don't allow content to break outside
+    overflow: auto;
+    // Disable auto-hiding scrollbar in IE & legacy Edge to avoid overlap,
+    // making it impossible to interact with the content
+    -ms-overflow-style: scrollbar;
+  }
+}
 
-// pre {
-//   // Remove browser default top margin
-//   margin-top: 0;
-//   // Reset browser default of `1em` to use `rem`s
-//   margin-bottom: 1rem;
-//   // Don't allow content to break outside
-//   overflow: auto;
-// }
 
 //
 // Figures
@@ -230,6 +254,7 @@ figure {
   // Apply a consistent margin strategy (matches our type styles).
   margin: 0 0 1rem;
 }
+
 
 //
 // Images and content
@@ -247,6 +272,7 @@ svg {
   vertical-align: middle;
 }
 
+
 //
 // Tables
 //
@@ -255,19 +281,20 @@ table {
   border-collapse: collapse; // Prevent double borders
 }
 
-// caption {
-//   padding-top: $table-cell-padding;
-//   padding-bottom: $table-cell-padding;
-//   color: $table-caption-color;
-//   text-align: left;
-//   caption-side: bottom;
-// }
+caption {
+  padding-top: $table-cell-padding;
+  padding-bottom: $table-cell-padding;
+  color: $table-caption-color;
+  text-align: left;
+  caption-side: bottom;
+}
 
 th {
   // Matches default `<td>` alignment by inheriting from the `<body>`, or the
   // closest parent with a set `text-align`.
   text-align: inherit;
 }
+
 
 //
 // Forms
@@ -291,10 +318,10 @@ button {
 // results in a loss of the default `button` focus styles.
 //
 // Credit: https://github.com/suitcss/base/
-// button:focus {
-//   outline: 1px dotted;
-//   outline: 5px auto -webkit-focus-ring-color;
-// }
+button:focus {
+  outline: 1px dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+}
 
 input,
 button,
@@ -317,12 +344,20 @@ select {
   text-transform: none; // Remove the inheritance of text transform in Firefox
 }
 
+// Set the cursor for non-`<button>` buttons
+//
+// Details at https://github.com/twbs/bootstrap/pull/30562
+[role="button"] {
+  cursor: pointer;
+}
+
 // Remove the inheritance of word-wrap in Safari.
 //
 // Details at https://github.com/twbs/bootstrap/issues/24990
 select {
   word-wrap: normal;
 }
+
 
 // 1. Prevent a WebKit bug where (2) destroys native `audio` and `video`
 //    controls in Android 4.
@@ -361,54 +396,44 @@ input[type="checkbox"] {
   padding: 0; // 2. Remove the padding in IE 10-
 }
 
-// input[type="date"],
-// input[type="time"],
-// input[type="datetime-local"],
-// input[type="month"] {
-//   // Remove the default appearance of temporal inputs to avoid a Mobile Safari
-//   // bug where setting a custom line-height prevents text from being vertically
-//   // centered within the input.
-//   // See https://bugs.webkit.org/show_bug.cgi?id=139848
-//   // and https://github.com/twbs/bootstrap/issues/11266
-//   -webkit-appearance: listbox;
-// }
 
 textarea {
   overflow: auto; // Remove the default vertical scrollbar in IE.
   // Textareas should really only resize vertically so they don't break their (horizontal) containers.
   resize: vertical;
 }
+@if $enable-seldom-using {
+  fieldset {
+    // Browsers set a default `min-width: min-content;` on fieldsets,
+    // unlike e.g. `<div>`s, which have `min-width: 0;` by default.
+    // So we reset that to ensure fieldsets behave more like a standard block element.
+    // See https://github.com/twbs/bootstrap/issues/12359
+    // and https://html.spec.whatwg.org/multipage/#the-fieldset-and-legend-elements
+    min-width: 0;
+    // Reset the default outline behavior of fieldsets so they don't affect page layout.
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
 
-// fieldset {
-//   // Browsers set a default `min-width: min-content;` on fieldsets,
-//   // unlike e.g. `<div>`s, which have `min-width: 0;` by default.
-//   // So we reset that to ensure fieldsets behave more like a standard block element.
-//   // See https://github.com/twbs/bootstrap/issues/12359
-//   // and https://html.spec.whatwg.org/multipage/#the-fieldset-and-legend-elements
-//   min-width: 0;
-//   // Reset the default outline behavior of fieldsets so they don't affect page layout.
-//   padding: 0;
-//   margin: 0;
-//   border: 0;
-// }
+  // 1. Correct the text wrapping in Edge and IE.
+  // 2. Correct the color inheritance from `fieldset` elements in IE.
+  legend {
+    display: block;
+    width: 100%;
+    max-width: 100%; // 1
+    padding: 0;
+    margin-bottom: .5rem;
+    @include font-size(1.5rem);
+    line-height: inherit;
+    color: inherit; // 2
+    white-space: normal; // 1
+  }
 
-// 1. Correct the text wrapping in Edge and IE.
-// 2. Correct the color inheritance from `fieldset` elements in IE.
-// legend {
-//   display: block;
-//   width: 100%;
-//   max-width: 100%; // 1
-//   padding: 0;
-//   margin-bottom: .5rem;
-//   @include font-size(1.5rem);
-//   line-height: inherit;
-//   color: inherit; // 2
-//   white-space: normal; // 1
-// }
-
-// progress {
-//   vertical-align: baseline; // Add the correct vertical alignment in Chrome, Firefox, and Opera.
-// }
+  progress {
+    vertical-align: baseline; // Add the correct vertical alignment in Chrome, Firefox, and Opera.
+  }
+}
 
 // Correct the cursor style of increment and decrement buttons in Chrome.
 [type="number"]::-webkit-inner-spin-button,
@@ -446,22 +471,23 @@ textarea {
 //
 // Correct element displays
 //
+@if $enable-correct {
+  output {
+    display: inline-block;
+  }
 
-// output {
-//   display: inline-block;
-// }
+  summary {
+    display: list-item; // Add the correct display in all browsers
+    cursor: pointer;
+  }
 
-// summary {
-//   display: list-item; // Add the correct display in all browsers
-//   cursor: pointer;
-// }
-
-// template {
-//   display: none; // Add the correct display in IE
-// }
+  template {
+    display: none; // Add the correct display in IE
+  }
+}
 
 // Always hide an element with the `hidden` HTML attribute (from PureCSS).
 // Needed for proper display in IE 10-.
-// [hidden] {
-//   display: none !important;
-// }
+[hidden] {
+  display: none !important;
+}

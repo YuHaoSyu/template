@@ -1,11 +1,10 @@
-// @each $breakpoint in map-keys($grid-breakpoints) {
-//   @include media-breakpoint-up($breakpoint) {
-//     $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
-
-    .tracking-tighter        { letter-spacing: -0.05rem !important; }
-    .tracking-tight          { letter-spacing: -0.025rem !important; }
-    .tracking-normal         { letter-spacing: 0 !important; }
-    .tracking-wide           { letter-spacing: 0.125rem !important; }
-    .tracking-wider          { letter-spacing: 0.25rem !important; }
-  // }
-// }
+$tracking: true;
+@mixin tracking($infix){
+  .tracking#{$infix}-tightest        { letter-spacing: -0.075em !important; }
+  .tracking#{$infix}-tighter        { letter-spacing: -0.05em !important; }
+  .tracking#{$infix}-tight          { letter-spacing: -0.025em !important; }
+  // .tracking#{$infix}-normal         { letter-spacing: 0 !important; }
+  // .tracking#{$infix}-wide           { letter-spacing: 0.025em !important; }
+  // .tracking#{$infix}-wider          { letter-spacing: 0.05em !important; }
+  // .tracking#{$infix}-widest          { letter-spacing: 0.075em !important; }
+}

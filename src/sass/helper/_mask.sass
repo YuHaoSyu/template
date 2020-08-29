@@ -6,8 +6,7 @@
   left: 0
 .mask
   @extend %mask
-  // @for $a from 5 through 8
-  //   &-white-a#{$a}
-  //     background-color: rgba($white,$a / 10)
-  //   &-black-a#{$a}
-  //       background-color: rgba($black,$a / 10)
+@each $color in map-keys($mask-alpha)
+  @each $alpha in map-get($mask-alpha, $color)
+    .bg-#{$color}-a#{$alpha}
+      background-color: rgba(if($color == 'white', #fff, #000), $alpha / 10)

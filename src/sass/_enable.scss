@@ -1,0 +1,28 @@
+$enable-form-validation: false;
+$enable-columns-offset: false;
+$enable-flex-order: false;
+//abbr
+$enable-abbreviations: false;
+// dt dd blockquote
+$enable-define: false;
+$enable-code: false;
+//fieldset legend progress
+$enable-seldom-using: false;
+//output summary template
+$enable-correct: false;
+$enable-rwd-container: true;
+$enable-table-thead-style: false;
+$enable-table-dark-style: false;
+$enable-customize-table: false;
+$enable-customize-btn-solid: false;
+$enable-customize-btn-outline: false;
+//// .dropdown-menu#{$infix}-left .dropdown-menu#{$infix}-right
+$enable-dropdown-rwd-y-pos: false;
+$enable-drop-others: false;
+$enable-horizontal-list-rwd: false;
+$enable-customize-list: false;
+
+$enable-display: false;
+
+$startup-pos: false;
+$enable-rwd-table: false;

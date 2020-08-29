@@ -1,11 +1,8 @@
-// @each $breakpoint in map-keys($grid-breakpoints) {
-  // @include media-breakpoint-up($breakpoint) {
-    // $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
-
-    .leading-none           { line-height: 1 !important; }
-    .leading-tight          { line-height: 1.2 !important; }
-    .leading-normal         { line-height: 1.5 !important; }
-    .leading-relaxed        { line-height: 1.8 !important; }
-    .leading-loose          { line-height: 2 !important; }
-  // }
-// }
+$leading: true;
+@mixin leading($infix){
+  .leading#{$infix}-none           { line-height: 1 !important; }
+  .leading#{$infix}-tight          { line-height: 1.25 !important; }
+  .leading#{$infix}-normal         { line-height: 1.5 !important; }
+  // .leading#{$infix}-relaxed        { line-height: 1.75 !important; }
+  // .leading#{$infix}-loose          { line-height: 2 !important; }
+}

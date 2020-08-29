@@ -1,33 +1,69 @@
+// Framework grid generation
+//
+// Used only by Bootstrap to generate the correct number of grid classes given
+// any value of `$grid-columns`.
 @mixin make-grid-columns($columns: $grid-columns, $gutter: $grid-gutter-width, $breakpoints: $grid-breakpoints) {
+  // Single container class with breakpoint max-widths
+  .container,
+  // 100% wide container at all breakpoints
+  .container-fluid {
+    @include make-container();
+  }
   // Common properties for all breakpoints
-  %grid-column {
+  .col, [class |= col] {
     position: relative;
     width: 100%;
-    padding-right: $gutter / 2;
-    padding-left: $gutter / 2;
+    // padding-right: $gutter / 2;
+    // padding-left: $gutter / 2;
   }
 
   @each $breakpoint in map-keys($breakpoints) {
     $infix: breakpoint-infix($breakpoint, $breakpoints);
-
-    // Allow columns to stretch full width below their breakpoints
-    @for $i from 1 through $columns {
-      .col#{$infix}-#{$i} {
-        @extend %grid-column;
+    @if $enable-rwd-container and $infix != '' {
+      .container#{$infix} {
+        @extend .container-fluid;
       }
-      @if ($i==3){
-        .col#{$infix}-fifth {
-          @extend %grid-column;
+    }
+
+    //! Use  [class |= col] to replace each column default setting
+    // @if $columns > 0 {
+    //   // Allow columns to stretch full width below their breakpoints
+    //   @for $i from 1 through $columns {
+    //     .col#{$infix}-#{$i} {
+    //       @extend %grid-column;
+    //     }
+    //   }
+    // }
+
+    // .col#{$infix},
+    // .col#{$infix}-auto {
+    //   @extend %grid-column;
+    // }
+
+    $extend-breakpoint: true;
+    @include media-breakpoint-up($breakpoint, $breakpoints) {
+      @if map-get($container-max-widths, $breakpoint) {
+        %responsive-container#{$infix} {
+          max-width: map-get($container-max-widths , $breakpoint);
+        }
+        .wrap, .container {
+          @extend %responsive-container#{$infix};
+        }
+        @if $enable-rwd-container {
+          @each $name, $width in $container-max-widths {
+            @if ($extend-breakpoint) {
+              .container-#{if($enable-rwd-container, $name, '')} {
+                @extend %responsive-container#{$infix};
+              }
+              // Once the current breakpoint is reached, stop extending
+              @if ($breakpoint == $name) {
+                $extend-breakpoint: false;
+              }
+            }
+          }
         }
       }
-    }
-    .col#{$infix},
-    .col#{$infix}-fifth,
-    .col#{$infix}-auto {
-      @extend %grid-column;
-    }
 
-    @include media-breakpoint-up($breakpoint, $breakpoints) {
       // Provide basic `.col-{bp}` classes for equal-width flexbox columns
       .col#{$infix} {
         flex-basis: 0;
@@ -35,22 +71,26 @@
         max-width: 100%;
       }
       .col#{$infix}-auto {
-        flex: 0 0 auto;
-        width: auto;
-        max-width: 100%; // Reset earlier grid tiers
+        @include make-col-auto();
       }
 
-      @for $i from 1 through $columns {
-        .col#{$infix}-#{$i} {
-          @include make-col($i, $columns);
+      @if $columns > 0 {
+        @for $i from 1 through $columns {
+          .col#{$infix}-#{$i} {
+            @include make-col($i, $columns);
+          }
         }
-        @if ($i==3){
-          .col#{$infix}-fifth {
-            @include make-col(1,5)
+      }
+      @if $grid-row-columns > 0 {
+        @for $i from 1 through $grid-row-columns {
+          .contents#{$infix}-#{$i} {
+            @if $columns % $i == 0 { & > * { @extend .col#{$infix}-#{$columns/$i}; } }
+            @else { @include row-cols($i); }
           }
         }
       }
 
+      @if $enable-flex-order {
       .order#{$infix}-first { order: -1; }
 
       .order#{$infix}-last { order: $columns + 1; }
@@ -58,15 +98,19 @@
       @for $i from 0 through $columns {
         .order#{$infix}-#{$i} { order: $i; }
       }
+      }
 
-      // `$columns - 1` because offsetting by the width of an entire row isn't possible
-      @for $i from 0 through ($columns - 1) {
-        @if not ($infix == "" and $i == 0) { // Avoid emitting useless .offset-0
-          .offset#{$infix}-#{$i} {
-            @include make-col-offset($i, $columns);
+      @if $columns > 0 and $enable-columns-offset {
+        // `$columns - 1` because offsetting by the width of an entire row isn't possible
+        @for $i from 0 through ($columns) {
+          @if not ($infix == "" and $i == 12) { // Avoid emitting useless .offset-0
+            .col-ml#{$infix}-#{$i} {
+              @include make-col-ml($i, $columns);
+            }
+            .col-mr#{$infix}-#{$i} {
+              @include make-col-mr($i, $columns);
           }
-          .break#{$infix}-#{$i} {
-            @include make-col-break($i, $columns);
+
           }
         }
       }

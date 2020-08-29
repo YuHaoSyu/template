@@ -1,0 +1,49 @@
+%abs
+  position: absolute
+
+@each $prop in $positions
+  $abbr: $prop
+  $index: index($positions, $prop)
+
+  @each $size in (0)
+    .#{$abbr}-#{$size}
+      #{$prop}: #{$size+'%'}
+    @if $size == 0
+      .inset-fill,
+      .inset-#{if($index < 3, 'y', 'x')}
+        @extend #{if($startup-pos, '.abs', '%abs')}
+        @extend .#{$abbr}-#{$size}
+
+  .inset-auto
+    #{$prop}: auto
+
+.inset
+  &-center
+    @extend #{if($startup-pos, '.abs', '%abs')}
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    &-top
+      @extend #{if($startup-pos, '.abs', '%abs')}
+      top: 0
+      left: 50%
+      transform: translateX(-50%)
+    &-right
+      @extend #{if($startup-pos, '.abs', '%abs')}
+      top: 50%
+      right: 0
+      transform: translateY(-50%)
+    &-bottom
+      @extend #{if($startup-pos, '.abs', '%abs')}
+      bottom: 0
+      left: 50%
+      transform: translateX(-50%)
+    &-left
+      @extend #{if($startup-pos, '.abs', '%abs')}
+      top: 50%
+      left: 0
+      transform: translateY(-50%)
+.abs,
+[class ^= inset]
+  &.rect
+    padding: 50% 50% 0 0

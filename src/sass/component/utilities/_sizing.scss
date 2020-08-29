@@ -4,23 +4,20 @@
 
 @each $prop, $abbrev in (width: w, height: h) {
   @each $size, $length in $sizes {
-    .#{$abbrev}-#{$size} { #{$prop}: #{$length}% !important; }
+    .#{$abbrev}-#{$size} { #{$prop}: #{$length + '%'} !important; }
     .v#{$abbrev}-#{$size} { #{$prop}: #{$length}v#{$abbrev} !important; }
   }
 }
 
-.mw-100 { max-width: 100% !important; }
-.mh-100 { max-height: 100% !important; }
+.max-w-100 { max-width: 100% !important; }
+.max-h-100 { max-height: 100% !important; }
 
 // Viewport additional helpers
 
-.min-vw-100 { min-width: 100vw !important; }
-.min-vh-100 { min-height: 100vh !important; }
+// .min-vw-0 { min-width: 0% !important; }
+// .min-vh-0 { min-height: 0% !important; }
+// .min-vw-100 { min-width: 100vw !important; }
+// .min-vh-100 { min-height: 100vh !important; }
 
 .w-auto { width: auto; }
 .h-auto { height: auto; }
-// .vw-100 { width: 100vw !important; }
-// .vh-100 { height: 100vh !important; }
-.h-ratio-768-w-1366{
-  height: 56.22255vw;
-}

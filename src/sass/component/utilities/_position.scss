@@ -1,28 +1,29 @@
 // stylelint-disable declaration-no-important
 
 // Common values
-@each $prop, $abbrev  in $positions {
-  .#{$prop} {
-    position: $abbrev !important;
+@each $position in $positions {
+  $abbr: $position;
+  @if ($position == 'relative' or $position =='absolute') {
+    $abbr: str-slice($position, 0, 3);
   }
+  .#{$abbr} { position: $position !important; }
 }
 
 // Shorthand
-
-.fixed-top {
-  position: fixed;
-  top: 0;
+%fixed{
+  @extend .fixed;
   right: 0;
   left: 0;
   z-index: $zindex-fixed;
 }
+.fixed-top {
+  @extend %fixed;
+  top: 0;
+}
 
 .fixed-bottom {
-  position: fixed;
-  right: 0;
+  @extend %fixed;
   bottom: 0;
-  left: 0;
-  z-index: $zindex-fixed;
 }
 
 .sticky-top {
@@ -33,43 +34,4 @@
   }
 }
 
-@each $prop, $abbrev in (top: t, right: r, bottom: b, left: l) {
-  @each $size, $length in (0: 0, 100: 100) {
-    .#{$abbrev}-#{$size} {
-      #{$prop}: #{$length + "%"};
-    }
-    @if $size == 0 {
-      .inset {
-        &-#{$size} {
-          @extend .#{$abbrev}-#{$size};
-        }
-        @if $prop == top or $prop == bottom {
-          &-x-#{$size} {
-            @extend .#{$abbrev}-#{$size};
-          }
-        }
-        @if $prop == left or $prop == right {
-          &-y-#{$size} {
-            @extend .#{$abbrev}-#{$size};
-          }
-        }
-      }
-    }
-  }
-  .#{$abbrev}-auto,
-  .inset-auto {
-    #{$prop}: auto;
-  }
-  .inset {
-    @if $prop == top or $prop == bottom {
-      &-x-auto {
-        @extend .#{$abbrev}-auto;
-      }
-    }
-    @if $prop == left or $prop == right {
-      &-y-auto {
-        @extend .#{$abbrev}-auto;
-      }
-    }
-  }
-}
+$startup-pos: true
