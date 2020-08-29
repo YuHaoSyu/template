@@ -1,5 +1,6 @@
 
 mixin breadcrumb(items)
+  -console.log('import breadcrumb.scss')
   nav(aria-label='breadcrumb')
     ol.breadcrumb
       each page in items.prev
@@ -9,6 +10,7 @@ mixin breadcrumb(items)
 //- +breadcrumb({prev:[{href:'#',n:'Home'},{href:'#',n:'Library'}],current:'Data'})
 
 mixin pagination(counter=4,option)
+  -console.log('import pagination.scss')
   -let config = {}
   -Object.assign(config,option)
   nav(aria-label='Page navigation example')
@@ -22,6 +24,8 @@ mixin pagination(counter=4,option)
         a.page-link(href='#') Next
 
 mixin modal(id='exampleModal', size)
+  -console.log('import modal.scss')
+  -console.log('import modal.js')
   -let slots = {};
   mixin slot(name)
     -slots[name] = block
@@ -51,6 +55,7 @@ mixin modal(id='exampleModal', size)
   button.btn.btn-primary(type='button' data-toggle='modal' data-target='#'+id) Launch demo modal
 
 mixin carousel(id='carouselExample',options)
+  -console.log('import carousel.scss')
   -let slots = []
   -let config = {fade: false,indicators:false,control:false}
   mixin slot(name)
@@ -79,6 +84,7 @@ mixin carousel(id='carouselExample',options)
         img.d-block.w-100(src='https://fakeimg.pl/1366x625/ff8888/' alt='...')
 
 mixin accordion(parentID='accordionExample')
+  -console.log('import accordion.scss')
   -let slots = []
   -let config = {fade: false,indicators:false,control:false}
   mixin slot()
@@ -92,7 +98,7 @@ mixin accordion(parentID='accordionExample')
           mixin card(cardID,collapseID,heading)
             .card-header(id=cardID)
               h2.mb-0
-                button.btn.btn-link.btn-block.text-left(type='button' data-toggle='collapse' data-target='#'+collapseID aria-expanded='true' aria-controls=collapseID)=heading
+                button.btn.btn-link.btn-block.txt-left(type='button' data-toggle='collapse' data-target='#'+collapseID aria-expanded='true' aria-controls=collapseID)=heading
             .collapse(class={'show':i===0} id=collapseID aria-labelledby=cardID data-parent='#'+parentID)
               .card-body
                 block
@@ -102,6 +108,7 @@ mixin accordion(parentID='accordionExample')
           p Lorem ipsum dolor sit amet.
 
 mixin media(img,alt,heading,content,options)
+  -console.log('import media.scss')
   -let config={imgPos:'left'}
   -Object.assign(config,options)
   .media(class={'mt-3':isNest})
@@ -123,8 +130,10 @@ mixin list(item, listId='list-tab')
       a.list-group-item.list-group-item-action(id='list-'+li+'-list', class={'active':!index}, role='tab', data-toggle='list', href='#list-'+li, aria-controls=li, aria-selected=!index?'true':'false')=li[0].toUpperCase()+li.slice(1)
       |
       |
+  //- +list(['a','b',])
 
 mixin nav(item, navId='nav-tab')
+  -console.log('import nav.scss')
   nav
     .nav.nav-tabs(role='tablist')
       |
@@ -133,8 +142,21 @@ mixin nav(item, navId='nav-tab')
         a.nav-item.nav-link(class={'active':!index}, id="nav-"+li+"-tab", role='tab', data-toggle='tab', href='#nav-'+li, aria-controls='nav-'+li, aria-selected=!index?'true':'false')=li[0].toUpperCase()+li.slice(1)
         |
         |
+  //-+nav(['a','b',])
 
+mixin aside-nav(item, navId='nav-tab')
+  -console.log('import nav.scss')
+  nav
+    .nav.nav-aside-tabs(role='tablist')
+      |
+      |
+      each li, index in item
+        a.nav-item.nav-link(class={'active':!index}, id="nav-"+li+"-tab", role='tab', data-toggle='tab', href='#nav-'+li, aria-controls='nav-'+li, aria-selected=!index?'true':'false')=li[0].toUpperCase()+li.slice(1)
+        |
+        |
+  //-+nav(['a','b',])
 mixin list-content(items, listContentId='list-tabContent')
+  -console.log('import nav.scss')
   -let slots = {};
   mixin slot(name)
     -slots[name] = block

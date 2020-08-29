@@ -1,9 +1,7 @@
 include ./template/_layout.pug
-mixin content
+mixin content()
   |
 doctype html
 +layout('index')
-
-
   +slot('body')
-    +content
+    +content()
