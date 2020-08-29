@@ -11,8 +11,6 @@ let sync = server.create()
 const $ = loadPlugins()
 
 let b4Path = './bootstrap/js/'
-let prefix = 'pre__'
-let prefixed = b4Path + 'prefix/'
 let b4JS = '_bootstrap.js'
 let options = minimist(process.argv.slice(2), {
   string: 'env',
@@ -31,13 +29,13 @@ export const pug = cb => {
     .pipe($.pug({ pretty: !bool })) // gulp-pug: pretty壓縮html檔
     .pipe($.replace('../img/', './img/'))
     .pipe($.replace('.pug', '.html'))
-    // .pipe(
-    //   $.if(
-    //     !bool,
-    //     $.replace("inline('", ''),
-    //     $.base64Inline('../dist', { prefix: '', suffix: '' })
-    //   )
-    // )
+    .pipe(
+      $.if(
+        !bool,
+        $.replace(/"inline\((.*)\)"/, '$1'),
+        $.base64Inline('../dist', { prefix: '', suffix: '' })
+      )
+    )
     // .pipe($.if(!bool, $.replace("g')", 'g')))
     .pipe(g.dest('./dist/'))
     .pipe(sync.stream()) //browserSync:更新檔案後重整preview
@@ -74,28 +72,14 @@ export const babel = cb => {
   g.src('./src/js/*.js')
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
-    .pipe($.eslint({ fix: true, globals: ['wow','WOW','jQuery', '$'] }))
+    .pipe($.eslint({ fix: true, globals: ['wow','WOW','jQuery', '$'], rules:{ 'no-undef': 0,'no-unused-vars': 0 }  }))
     .pipe($.eslint.format())
     .pipe($.eslint.failAfterError())
     .pipe($.if(eslintFixed, g.dest('./src/js/')))
-    .pipe($.babel({ presets: ['@babel/preset-env'] })) //["@babel/preset-env"] //gulp-babel @babel/preset-env @babel/core
+    .pipe($.babel({ presets: ['@babel/preset-env']})) //["@babel/preset-env"] //gulp-babel @babel/preset-env @babel/core
     .pipe($.concat('script.js')) //gulp-concat:合併檔案
     .pipe($.if(bool, $.uglify({ compress: { drop_console: true } }), $.sourcemaps.write('.'))) //gulp-uglify: 壓縮js並清除console
-    .pipe(g.dest('./dist/js', { sourcemaps: !bool }))
-    .pipe(sync.stream())
-  cb()
-}
-export const includeJS = cb => {
-  g.src('./src/js/include/*.js')
-    .pipe($.plumber())
-    .pipe($.sourcemaps.init())
-    .pipe($.eslint({ fix: true, globals: ['jQuery', '$'] }))
-    .pipe($.eslint.format())
-    .pipe($.eslint.failAfterError())
-    .pipe($.if(eslintFixed, g.dest('./src/js/')))
-    .pipe($.babel({ presets: ['@babel/preset-env'] })) //["@babel/preset-env"] //gulp-babel @babel/preset-env @babel/core
-    .pipe($.if(bool, $.uglify({ compress: { drop_console: true } }), $.sourcemaps.write('.'))) //gulp-uglify: 壓縮js並清除console
-    .pipe(g.dest('./dist/js/include', { sourcemaps: !bool }))
+    .pipe(g.dest('./dist/js', { sourcemaps: false }))
     .pipe(sync.stream())
   cb()
 }
@@ -104,13 +88,13 @@ export const vendors = cb => {
   g.src([...bower(), b4Path + b4JS]) //main-bower-files:抓取套件主檔案
     .pipe($.order(['svgxuse.js', 'jquery.js', 'popper.js', b4JS]))
     .pipe($.concat('vendors.js'))
-    .pipe($.if(bool, $.uglify()))
-    .pipe(g.dest('./dist/js'))
+    .pipe( $.uglify())
+    .pipe(g.dest('./dist/js', { sourcemaps: false }))
   cb()
 }
 
 export const browserSync = cb => {
-  sync.init({ server: { baseDir: './dist' }, reloadDebounce: 1500 })
+  sync.init({port:80, server: { baseDir: './dist' }, reloadDebounce: 1500 })
   cb()
 }
 export const imageMin = cb => {
@@ -141,7 +125,6 @@ export const clean = cb => {
   cb()
 }
 
-
 export const inlineSVG = cb => {
   g.src('./src/img/inlineSVG/**/*.svg')
   .pipe($.imagemin([$.imagemin.svgo()]))
@@ -156,15 +139,15 @@ export const inlineSVG = cb => {
 }
 export const sprite = cb => {
   g.src('./src/img/spriteSVG/**/*.svg')
-    .pipe($.imagemin([$.imagemin.svgo()]))
-    .pipe($.replace(' xmlns="http://www.w3.org/2000/svg"',''))
+    .pipe($.if(bool, $.imagemin([$.imagemin.svgo()])))
     .pipe($.svgSprite({ mode: { symbol: true } }))
     .pipe($.concat('sprite.svg'))
-    .pipe($.replace(' stroke-miterlimit="10"',''))
-    .pipe($.replace(' stroke-linecap="butt"',''))
-    .pipe($.replace(' stroke-linejoin="round"',''))
-    .pipe($.replace('<?xml version="1.0" encoding="utf-8"?>',''))
-    .pipe($.replace(' xmlns:xlink="http://www.w3.org/1999/xlink"',''))
+    .pipe($.if(bool, $.replace(' xmlns="http://www.w3.org/2000/svg"','')))
+    .pipe($.if(bool, $.replace(' stroke-miterlimit="10"','')))
+    .pipe($.if(bool, $.replace(' stroke-linecap="butt"','')))
+    .pipe($.if(bool, $.replace(' stroke-linejoin="round"','')))
+    .pipe($.if(bool, $.replace('<?xml version="1.0" encoding="utf-8"?>','')))
+    .pipe($.if(bool, $.replace(' xmlns:xlink="http://www.w3.org/1999/xlink"','')))
     .pipe(g.dest('./dist/img'))
     .pipe(sync.stream())
   cb()
@@ -191,6 +174,5 @@ exports.default = g.parallel(
   browserSync
 )
 exports.build = g.series(clean, imageMin, vendors, babel, pug, sass)
-
 
 //eslintOption

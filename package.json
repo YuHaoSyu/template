@@ -4,6 +4,7 @@
   "description": "To build the compiler to parse .pug, .sass, .ES6+, compressing photographics.",
   "main": "index.js",
   "scripts": {
+    "run": "gulp",
     "build": "gulp build --env build",
     "css": "gulp sass --env build",
     "js": "gulp babel --env build",
@@ -17,40 +18,36 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@babel/core": "^7.7.7",
-    "@babel/preset-env": "^7.7.7",
-    "@babel/register": "^7.7.7",
-    "autoprefixer": "^9.7.3",
+    "@babel/core": "^7.11.4",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/register": "^7.10.5",
+    "autoprefixer": "^9.8.6",
     "babel-preset-es2015": "^6.24.1",
-    "browser-sync": "^2.26.7",
+    "browser-sync": "^2.26.12",
     "del": "^5.1.0",
     "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-node": "^9.2.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-base64-inline": "^1.0.6",
-    "gulp-class-prefix": "^1.0.1",
-    "gulp-clean-css": "^4.2.0",
+    "gulp-clean-css": "^4.3.0",
     "gulp-concat": "^2.6.1",
     "gulp-eslint": "^6.0.0",
-    "gulp-gh-pages": "^0.5.4",
-    "gulp-html-prefix": "0.0.1",
     "gulp-if": "^2.0.2",
     "gulp-imagemin": "^7.1.0",
     "gulp-inline-svg": "^1.2.0",
     "gulp-load-plugins": "^1.6.0",
-    "gulp-minify-cssnames": "^2.1.0",
     "gulp-order": "^1.2.0",
     "gulp-plumber": "^1.2.1",
     "gulp-postcss": "^8.0.0",
     "gulp-pug": "^4.0.1",
     "gulp-purgecss": "^1.2.0",
     "gulp-replace": "^1.0.0",
-    "gulp-sass": "^4.0.2",
+    "gulp-sass": "^4.1.0",
     "gulp-sass-lint": "^1.4.0",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-svg-sprite": "^1.5.0",
@@ -58,18 +55,18 @@
     "imagemin-jpeg-recompress": "^6.0.0",
     "imagemin-pngquant": "^8.0.0",
     "main-bower-files": "^2.13.3",
-    "minimist": "^1.2.0"
+    "minimist": "^1.2.5"
   },
   "devDependencies": {},
   "browserslist": [
-    "last 1 version",
-    "IE 10",
-    "> 5%"
+    "last 1 version"
   ],
-  "babel":{
-    "presets": ["@babel/preset-env"]
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
   },
-  "eslintConfig":{
+  "eslintConfig": {
     "env": {
       "browser": true,
       "es6": true
@@ -86,7 +83,7 @@
       "sourceType": "module"
     }
   },
-  "prettier":{
+  "prettier": {
     "singleQuote": true,
     "semi": false
   }

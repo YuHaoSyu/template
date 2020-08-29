@@ -4,9 +4,37 @@ align-items =>ai
 align-content =>ac
 align-self =>as
 
+table-responsive =>table-rwd
+font-weight-light => font-light
 
-font-weight-light => text-thin
+text =>txt
+
+position-relative => rel
+position-absolute => abs
+
+overflow => ovf
+.txt-title, .txt-heading, .txt-subtitle, .txt-xl, .txt-lg, .txt-md => .h1~6
+
+d-block-lg => block-l
+d-inline-block-md => i-block-m
 
 
-relative => rel
-absolute => abs
+new class
+cols-1~6  => content-1~6
+
+primary => 1°
+
+.offset- => .col-ml .col-mr
+"browserslist": [
+  "last 1 version",
+  "IE 10",
+  "> 5%"
+],
+
+
+gulp
+"gulp-html-prefix": "0.0.1",
+"gulp-minify-cssnames": "^2.1.0",
+"gulp-class-prefix": "^1.0.1",
+"gulp-base64-inline": "^1.0.6",
+"gulp-gh-pages": "^0.5.4",

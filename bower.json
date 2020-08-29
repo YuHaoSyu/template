@@ -2,21 +2,12 @@
   "name": "gulp_compiler",
   "description": "",
   "main": "index.js",
-  "authors": [
-    "YuHao <syu516029@gmail.com>"
-  ],
+  "authors": ["YuHao <syu516029@gmail.com>"],
   "license": "ISC",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
+  "ignore": ["**/.*", "node_modules", "bower_components", "test", "tests"],
   "dependencies": {
     "jquery": "^3.4.1",
-    "popper.js": "^1.15.0",
-    "svgxuse": "^1.2.6",
-    "wow": "wowjs#^1.1.2"
+    "popper.js": "1.14.3",
+    "svgxuse": "^1.2.6"
   }
 }
