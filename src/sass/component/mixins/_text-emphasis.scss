@@ -5,11 +5,6 @@
 @mixin text-emphasis-variant($parent, $color, $ignore-warning: false) {
   #{$parent} {
     color: $color !important;
-    &.a {
-      a {
-        @extend #{$parent};
-      }
-    }
   }
   @if $emphasized-link-hover-darken-percentage != 0 {
     a#{$parent} {

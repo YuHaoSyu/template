@@ -4,7 +4,7 @@ $tracking: true;
   .tracking#{$infix}-tighter        { letter-spacing: -0.05em !important; }
   .tracking#{$infix}-tight          { letter-spacing: -0.025em !important; }
   // .tracking#{$infix}-normal         { letter-spacing: 0 !important; }
-  // .tracking#{$infix}-wide           { letter-spacing: 0.025em !important; }
-  // .tracking#{$infix}-wider          { letter-spacing: 0.05em !important; }
-  // .tracking#{$infix}-widest          { letter-spacing: 0.075em !important; }
+  .tracking#{$infix}-wide           { letter-spacing: 0.1em !important; }
+  .tracking#{$infix}-wider          { letter-spacing: 0.15em !important; }
+  .tracking#{$infix}-widest          { letter-spacing: 0.3em !important; }
 }

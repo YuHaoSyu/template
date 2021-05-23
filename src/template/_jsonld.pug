@@ -1,9 +1,17 @@
 mixin jsonBreadcrumb(items)
-  -let jsonld ={'@context':'https://schema.org/','@type':'BreadcrumbList'}
+
+
+  -let jsonld ={ '@context': 'https://schema.org/', '@type': 'BreadcrumbList' }
   -let itemListElement =[]
   each item, index in items
-    -let obj ={'@type': 'ListItem',position: index,name: item.n,item:item.href}
+    -
+      let obj = {
+            '@type': 'ListItem',
+            position: index+1,
+            name: seo[item].title,
+          }
+    -index < items.length-1 && (obj.item = 'http://whatlife.no-ip.org/test/'+project+'/'+ items[index]+'.html')
     -itemListElement.push(obj)
-  -jsonld.itemListElement=itemListElement
-  script(type="application/ld+json")!=JSON.stringify(jsonld)
-//- +jsonBreadcrumb( [{href:'#',n:'Home'},{href:'#',n:'Library'}])
+    -jsonld.itemListElement=itemListElement
+  script(type="application/ld+json").
+      !{JSON.stringify(jsonld, null, 2)}

@@ -1,10 +1,9 @@
+include ./template/_seo
+
 doctype html
 -let web ='template'
 html(lang="en")
-  -
-    let pages = [
-          {name:'全站首頁',href:'./index.html'}
-          ]
+
   head
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
@@ -51,7 +50,7 @@ html(lang="en")
   body
     h1
       a(href="http://"+web+".cmind.com.tw/" target="_blank") 測試站
-      |&nbsp;無痕瀏覽 ctrl + shift + N
+      | &nbsp;無痕瀏覽 ctrl + shift + N
 
     label(for="defaultBp") 所有裝置
     input#defaultBp(style="width:14px" type="checkbox")
@@ -73,27 +72,29 @@ html(lang="en")
             input.cz-input.cz-width(type="number" placeholder='width' disabled value="375" data-size="width")
             input.cz-input.cz-height(type="number" placeholder='height' disabled value="667" data-size="height")
       tbody
-        each a,i in pages
+        -let i = 0
+        each obj, key in seo
+          -i++
           tr
-            th=(i<9?'0':'') + (i+1) +' '+ a.name
+            th=(i<9?'0':'') + (i) +' '+ obj.title
             //- td
             //-   a(target="_blank" href=a.invision) pattern
             td
-              a(target="_blank" href=a.href) auto
+              a(target="_blank" href='./'+key+'.html') auto
             td
-              a.anchor.clipboard(target="_blank" href=a.href) copy
+              a.anchor.clipboard(target="_blank" href='./'+key+'.html') copy
             td
               a.anchor.all-dev(href="#") all
             td.default-dev.d-none
-              a.anchor.phone(href=a.href) 360
+              a.anchor.phone(href='./'+key+'.html') 360
             td.default-dev.d-none
-              a.anchor.md-h(href=a.href) 768
+              a.anchor.md-h(href='./'+key+'.html') 768
             td.default-dev.d-none
-              a.anchor.md-v(href=a.href) 1024
+              a.anchor.md-v(href='./'+key+'.html') 1024
             td.default-dev.d-none
-              a.anchor.pc(href=a.href) 1366
+              a.anchor.pc(href='./'+key+'.html') 1366
             td.cz-dev.d-none
-              a.anchor.for-select(href=a.href) User Select
+              a.anchor.for-select(href='./'+key+'.html') User Select
       div
         a(href="http://127.0.0.1/demo.html" style="color:#aaffaa") Local
         a(href="http://whatlife.no-ip.org/test/"+web+"/demo.html" style="color:#ffaaaa") Static

@@ -9,20 +9,27 @@ font-weight-light => font-light
 
 text =>txt
 
+align-baseline => v-baseline
+
 position-relative => rel
 position-absolute => abs
 
 overflow => ovf
-.txt-title, .txt-heading, .txt-subtitle, .txt-xl, .txt-lg, .txt-md => .h1~6
+.txt-heading, .txt-title, .txt-subtitle, .txt-xl, .txt-lg, .txt-md => .h1~6
 
 d-block-lg => block-l
 d-inline-block-md => i-block-m
 
+rounded- => radius
+rounded-circle => rounded
+rounded-pill => pill
+border => b
 
 new class
-cols-1~6  => content-1~6
+cols-1~6  => content-1~6 =>grid-1~6
 
-primary => 1°
+.txt-primary.a
+.txt-undecorated
 
 .offset- => .col-ml .col-mr
 "browserslist": [
@@ -38,3 +45,8 @@ gulp
 "gulp-class-prefix": "^1.0.1",
 "gulp-base64-inline": "^1.0.6",
 "gulp-gh-pages": "^0.5.4",
+
+
+ "last 2 version",
+    "> 0.5%",
+    "ie >= 10"

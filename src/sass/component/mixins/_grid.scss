@@ -10,6 +10,16 @@
   margin-left: auto;
 }
 
+// For each breakpoint, define the maximum width of the container in a media query
+@mixin make-container-max-widths($max-widths: $container-max-widths, $breakpoints: $grid-breakpoints) {
+  @each $breakpoint, $container-max-width in $max-widths {
+    @include media-breakpoint-up($breakpoint, $breakpoints) {
+      max-width: $container-max-width;
+    }
+  }
+  @include deprecate("The `make-container-max-widths` mixin", "v4.5.2", "v5");
+}
+
 @mixin make-row($gutter: $grid-gutter-width) {
   display: flex;
   flex: 1 0 100%;
@@ -30,17 +40,17 @@
 }
 
 @mixin make-col($size, $columns: $grid-columns) {
-  flex: 0 0 percentage($size / $columns);
+  flex: 0 0 auto;
   // Add a `max-width` to ensure content within each column does not blow out
   // the width of the column. Applies to IE10+ and Firefox. Chrome and Safari
   // do not appear to require this.
-  max-width: percentage($size / $columns);
+  width: percentage($size / $columns);
 }
 
 @mixin make-col-auto() {
   flex: 0 0 auto;
   width: auto;
-  max-width: 100%; // Reset earlier grid tiers
+  // max-width: 100%; // Reset earlier grid tiers
 }
 
 @mixin make-col-ml($size, $columns: $grid-columns) {
@@ -58,7 +68,7 @@
 // style grid.
 @mixin row-cols($count) {
   & > * {
-    flex: 0 0 100% / $count;
-    max-width: 100% / $count;
+    flex: 0 0 auto;
+    width: percentage(100 / $count);
   }
 }

@@ -289,10 +289,14 @@ caption {
   caption-side: bottom;
 }
 
+// 1. Removes font-weight bold by inheriting
+// 2. Matches default `<td>` alignment by inheriting `text-align`.
+// 3. Fix alignment for Safari
+
 th {
-  // Matches default `<td>` alignment by inheriting from the `<body>`, or the
-  // closest parent with a set `text-align`.
-  text-align: inherit;
+  font-weight: $table-th-font-weight; // 1
+  text-align: inherit; // 2
+  text-align: -webkit-match-parent; // 3
 }
 
 
@@ -310,17 +314,17 @@ label {
 //
 // Details at https://github.com/twbs/bootstrap/issues/24093
 button {
-  // stylelint-disable-next-line property-blacklist
+  // stylelint-disable-next-line property-disallowed-list
   border-radius: 0;
 }
 
-// Work around a Firefox/IE bug where the transparent `button` background
-// results in a loss of the default `button` focus styles.
-//
-// Credit: https://github.com/suitcss/base/
-button:focus {
-  outline: 1px dotted;
-  outline: 5px auto -webkit-focus-ring-color;
+// Explicitly remove focus outline in Chromium when it shouldn't be
+// visible (e.g. as result of mouse click or touch tap). It already
+// should be doing this automatically, but seems to currently be
+// confused and applies its very visible two-tone outline anyway.
+
+button:focus:not(:focus-visible) {
+  outline: 0;
 }
 
 input,
@@ -364,7 +368,7 @@ select {
 // 2. Correct the inability to style clickable types in iOS and Safari.
 button,
 [type="button"], // 1
-[type="reset"],
+// [type="reset"],
 [type="submit"] {
   -webkit-appearance: button; // 2
 }
@@ -373,7 +377,7 @@ button,
 @if $enable-pointer-cursor-for-buttons {
   button,
   [type="button"],
-  [type="reset"],
+  // [type="reset"],
   [type="submit"] {
     &:not(:disabled) {
       cursor: pointer;
@@ -384,7 +388,7 @@ button,
 // Remove inner border and padding from Firefox, but don't restore the outline like Normalize.
 button::-moz-focus-inner,
 [type="button"]::-moz-focus-inner,
-[type="reset"]::-moz-focus-inner,
+// [type="reset"]::-moz-focus-inner,
 [type="submit"]::-moz-focus-inner {
   padding: 0;
   border-style: none;
@@ -488,6 +492,6 @@ textarea {
 
 // Always hide an element with the `hidden` HTML attribute (from PureCSS).
 // Needed for proper display in IE 10-.
-[hidden] {
-  display: none !important;
-}
+// [hidden] {
+//   display: none !important;
+// }

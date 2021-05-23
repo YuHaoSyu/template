@@ -12,16 +12,16 @@ $flex: true;
     .from-top#{$infix}       { flex-direction: column !important; }
     .to-left#{$infix}        { flex-direction: row-reverse !important; }
     .to-top#{$infix}         { flex-direction: column-reverse !important; }
-    .wrap-0#{$infix}       { flex-wrap: nowrap !important; }
-    .wrap-1#{$infix}     { flex-wrap: wrap !important; }
-    .wrap-rev#{$infix}     { flex-wrap: wrap-reverse !important; }
-    .flex-0#{$infix}    { flex: 0 0 auto !important; }
-    .flex-1#{$infix}       { flex: 1 1 0 !important; }
-    .flex-fill#{$infix}    { flex: 1 1 auto !important; }
-    .grow-0#{$infix}       { flex-grow: 0 !important; }
-    .grow-1#{$infix}       { flex-grow: 1 !important; }
-    .shrink-0#{$infix}     { flex-shrink: 0 !important; }
-    .shrink-1#{$infix}     { flex-shrink: 1 !important; }
+    .wrap-0#{$infix}         { flex-wrap: nowrap !important; }
+    .wrap-1#{$infix}         { flex-wrap: wrap !important; }
+    .wrap-rev#{$infix}       { flex-wrap: wrap-reverse !important; }
+    .flex-0#{$infix}         { flex: 0 0 auto !important; }
+    .flex-1#{$infix}         { flex: 1 1 0 !important; }
+    .flex-fill#{$infix}       { flex: 1 1 auto !important; }
+    .grow-0#{$infix}          { flex-grow: 0 !important; }
+    .grow-1#{$infix}          { flex-grow: 1 !important; }
+    .shrink-0#{$infix}        { flex-shrink: 0 !important; }
+    .shrink-1#{$infix}        { flex-shrink: 1 !important; }
 
     .justify#{$infix}-start   { justify-content: flex-start !important; }
     .justify#{$infix}-end     { justify-content: flex-end !important; }
@@ -29,6 +29,7 @@ $flex: true;
     .justify#{$infix}-between { justify-content: space-between !important; }
     .justify#{$infix}-around  { justify-content: space-around !important; }
     .justify#{$infix}-evenly  { justify-content: space-evenly !important; }
+    .justify#{$infix}-stretch  { justify-content: stretch !important; }
 
     .items#{$infix}-start    { align-items: flex-start !important; }
     .items#{$infix}-end      { align-items: flex-end !important; }
@@ -50,5 +51,5 @@ $flex: true;
     .self#{$infix}-center   { align-self: center !important; }
     .self#{$infix}-baseline { align-self: baseline !important; }
     .self#{$infix}-stretch  { align-self: stretch !important; }
-  }
+}
 //}

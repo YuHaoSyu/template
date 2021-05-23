@@ -1,8 +1,8 @@
 // stylelint-disable declaration-no-important
 
-.align-baseline    { vertical-align: baseline !important; } // Browser default
-.align-top         { vertical-align: top !important; }
-.align-middle      { vertical-align: middle !important; }
-.align-bottom      { vertical-align: bottom !important; }
-.align-text-bottom { vertical-align: text-bottom !important; }
-.align-text-top    { vertical-align: text-top !important; }
+.v-baseline    { vertical-align: baseline !important; } // Browser default
+.v-top         { vertical-align: top !important; }
+.v-middle      { vertical-align: middle !important; }
+.v-bottom      { vertical-align: bottom !important; }
+.v-txtbottom { vertical-align: text-bottom !important; }
+.v-txttop    { vertical-align: text-top !important; }

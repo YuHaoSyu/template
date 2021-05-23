@@ -1,13 +1,14 @@
 
 mixin breadcrumb(items)
-  -console.log('import breadcrumb.scss')
   nav(aria-label='breadcrumb')
     ol.breadcrumb
-      each page in items.prev
-        li.breadcrumb-item
-          a(href=page.href)=page.n
-      li.breadcrumb-item.active(aria-current='page')= items.current
-//- +breadcrumb({prev:[{href:'#',n:'Home'},{href:'#',n:'Library'}],current:'Data'})
+      each item, index in items
+        if -index < items.length-1
+          li.breadcrumb-item
+            a(href='./'+ items[index]+'.html')=seo[item].title
+        else
+          li.breadcrumb-item.active(aria-current='page')
+            h2.breadcrumb-title= seo[file].title
 
 mixin pagination(counter=4,option)
   -console.log('import pagination.scss')

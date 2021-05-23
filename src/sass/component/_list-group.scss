@@ -88,37 +88,36 @@
 // Horizontal
 //
 // Change the layout of list group items from vertical (default) to horizontal.
-@if $enable-horizontal-list-rwd {
-  @each $breakpoint in map-keys($grid-breakpoints) {
-    @include media-breakpoint-up($breakpoint) {
-      $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
 
-      .list-group-horizontal#{$infix} {
-        flex-direction: row;
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
 
-        > .list-group-item {
-          &:first-child {
-            @include border-bottom-left-radius($list-group-border-radius);
-            @include border-top-right-radius(0);
-          }
+    .list-group-horizontal#{$infix} {
+      flex-direction: row;
 
-          &:last-child {
-            @include border-top-right-radius($list-group-border-radius);
-            @include border-bottom-left-radius(0);
-          }
+      > .list-group-item {
+        &:first-child {
+          @include border-bottom-left-radius($list-group-border-radius);
+          @include border-top-right-radius(0);
+        }
+
+        &:last-child {
+          @include border-top-right-radius($list-group-border-radius);
+          @include border-bottom-left-radius(0);
+        }
+
+        &.active {
+          margin-top: 0;
+        }
+
+        + .list-group-item {
+          border-top-width: $list-group-border-width;
+          border-left-width: 0;
 
           &.active {
-            margin-top: 0;
-          }
-
-          & + .list-group-item {
-            border-top-width: $list-group-border-width;
-            border-left-width: 0;
-
-            &.active {
-              margin-left: -$list-group-border-width;
-              border-left-width: $list-group-border-width;
-            }
+            margin-left: -$list-group-border-width;
+            border-left-width: $list-group-border-width;
           }
         }
       }
@@ -149,8 +148,7 @@
 //
 // Add modifier classes to change text and background color on individual items.
 // Organizationally, this must come after the `:hover` states.
-@if ($enable-customize-list){
-  @each $color, $value in $theme-colors {
-    @include list-group-item-variant($color, theme-color-level($color, -9), theme-color-level($color, 6));
-  }
+
+@each $color, $value in $theme-colors {
+  @include list-group-item-variant($color, theme-color-level($color, -9), theme-color-level($color, 6));
 }

@@ -2,17 +2,36 @@
   &::placeholder
     color: rgba($color, $alpha) !important
 
-// $bg-gray: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e, f
-// @each $gray in $bg-gray
-//   .bg-gray-#{$gray}
-//     background-color: #{'#'+$gray}#{$gray}#{$gray}
+@function gray($i, $six-dig: false)
+  $three-dig: #{'#'+$i+$i+$i}
+  @if $six-dig
+    @return #{$three-dig+$i+$i+$i}
+  @return unquote($three-dig)
 
-
+$bg-gray: 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e
+@each $gray in $bg-gray
+  .bg-gray-#{$gray}
+    background-color: gray($gray)
 
 // $txt-gray: 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e
-// @for $gray from 1 through 14
+// @each $gray in $txt-gray
 //   .txt-gray-#{$gray}
-//     color: #{'#'+nth($txt-gray,$gray)+nth($txt-gray,$gray)+nth($txt-gray,$gray)}
+//     color: gray($gray)
+
+
+// @for $i from 1 through 14
+//   $rgb-color: rgb(8 * $i + $i, 8 * $i + $i, 8 * $i + $i)
+//   $n: nth($txt-gray, $i)
+
+//   a.txt-gray-#{$n}
+//     @extend .txt-gray-#{$n}
+//     +hover-focus()
+//       @if  $i < 8
+//         color: lighten($rgb-color, 10%)
+//       @else
+//         color: darken($rgb-color, 10%)
+
+
 
 // $border-gray: 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b, c, d, e
 // @for $gray from 1 through 14

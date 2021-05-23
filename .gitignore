@@ -1,5 +1,7 @@
 bower_components/
 node_modules/
+plugin/
 tmp/
 dist/
 src/img/
+src/sass/icon/_ico.sass

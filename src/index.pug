@@ -1,7 +1,5 @@
-include ./template/_layout.pug
-mixin content()
-  |
-doctype html
-+layout('index')
-  +slot('body')
-    +content()
+extends ./template/_layout.pug
+block var
+  -let file = 'index'
+
+block body

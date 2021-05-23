@@ -31,7 +31,10 @@ $mask-alpha: ('black': (), 'white': ())
 //     &::before
 //       content: counters(item, '.') ' '
 //       counter-increment: item
-
+.no-mt-collapse
+  padding-top: 0.007813px
+.no-mb-collapse
+  padding-bottom: 0.007813px
 // @import './scrollbar'
 @import './background'
 // @import './animate'
@@ -41,5 +44,4 @@ $mask-alpha: ('black': (), 'white': ())
 @import './component'
 @import './inset'
 @import './limited-lines'
-@import './ico'
 @import './mask'

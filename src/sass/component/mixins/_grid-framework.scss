@@ -10,7 +10,7 @@
     @include make-container();
   }
   // Common properties for all breakpoints
-  .col, [class |= col] {
+  [class |= col] {
     position: relative;
     width: 100%;
     // padding-right: $gutter / 2;
@@ -22,6 +22,9 @@
     @if $enable-rwd-container and $infix != '' {
       .container#{$infix} {
         @extend .container-fluid;
+      }
+      .wrap#{$infix} {
+        @extend .wrap-fluid;
       }
     }
 
@@ -55,6 +58,9 @@
               .container-#{if($enable-rwd-container, $name, '')} {
                 @extend %responsive-container#{$infix};
               }
+              .wrap-#{if($enable-rwd-container, $name, '')} {
+                @extend %responsive-container#{$infix};
+              }
               // Once the current breakpoint is reached, stop extending
               @if ($breakpoint == $name) {
                 $extend-breakpoint: false;
@@ -70,6 +76,20 @@
         flex-grow: 1;
         max-width: 100%;
       }
+      @if $grid-row-columns > 0 {
+        @for $i from 1 through $grid-row-columns {
+          .grid#{$infix}-#{$i} {
+            // @if $columns % $i == 0 { & > * { @extend .col#{$infix}-#{$columns/$i}; } }
+            // @else { @include row-cols($i); }
+            @include row-cols($i);
+          }
+        }
+        .grid#{$infix}-auto > * {
+          // @if $columns % $i == 0 { & > * { @extend .col#{$infix}-#{$columns/$i}; } }
+          // @else { @include row-cols($i); }
+          @include make-col-auto();
+        }
+      }
       .col#{$infix}-auto {
         @include make-col-auto();
       }
@@ -81,23 +101,15 @@
           }
         }
       }
-      @if $grid-row-columns > 0 {
-        @for $i from 1 through $grid-row-columns {
-          .contents#{$infix}-#{$i} {
-            @if $columns % $i == 0 { & > * { @extend .col#{$infix}-#{$columns/$i}; } }
-            @else { @include row-cols($i); }
-          }
-        }
-      }
 
       @if $enable-flex-order {
-      .order#{$infix}-first { order: -1; }
+        .order#{$infix}-first { order: -1; }
 
-      .order#{$infix}-last { order: $columns + 1; }
+        .order#{$infix}-last { order: $columns + 1; }
 
-      @for $i from 0 through $columns {
-        .order#{$infix}-#{$i} { order: $i; }
-      }
+        @for $i from 0 through $columns {
+          .order#{$infix}-#{$i} { order: $i; }
+        }
       }
 
       @if $columns > 0 and $enable-columns-offset {
@@ -109,8 +121,7 @@
             }
             .col-mr#{$infix}-#{$i} {
               @include make-col-mr($i, $columns);
-          }
-
+            }
           }
         }
       }

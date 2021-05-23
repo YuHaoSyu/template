@@ -12,3 +12,20 @@ html
     &:decrement,
     &:increment
       background-color: $danger
+
+.scrollbar-secondary-x
+  &::-webkit-scrollbar-button
+    width: 0
+  &::-webkit-scrollbar-track-piece
+    background-color: $danger
+
+
+.scroll-container
+  width: 100%
+.scroll-nowrap
+  flex-wrap: nowrap
+  align-items: center
+  max-width: 100%
+  overflow-x: auto
+  overflow-y: hidden
+  white-space: nowrap

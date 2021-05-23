@@ -1,0 +1,39 @@
+{{#svgs}}
+${{{name}}}: "{{{inline}}}" {{width}} {{height}}
+{{/svgs}}
+
+@mixin inline-svg($name)
+	background: transparent url(nth($name, 1)) no-repeat 50% 50%
+	background-size: 100%
+	width: nth($name, 2)
+	height: nth($name, 3)
+
+
+@function ico-width($name)
+	@return nth($name, 2)
+
+
+@function ico-height($name)
+	@return nth($name, 3)
+
+$sprite-arr: ({{#svgs}}{{name}}: ${{{name}}}, {{/svgs}})
+
+@each $key, $value in $sprite-arr
+  .ico-#{$key}
+    background-image: url(nth($value, 1))
+
+=icon-size($size: $font-size-base)
+	.ico
+		padding-left: round($size * 1.25*100)/100
+		background-position-y: round($size * ($line-height-base - 1) / 2 * 100) / 100
+		background-size: $size
+		@content
+
++icon-size
+	background-repeat: no-repeat
+
+.txt-lg
+  +icon-size($h5-font-size)
+
+.txt-sm
+  +icon-size($font-sm)

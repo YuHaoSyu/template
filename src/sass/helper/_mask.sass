@@ -8,5 +8,5 @@
   @extend %mask
 @each $color in map-keys($mask-alpha)
   @each $alpha in map-get($mask-alpha, $color)
-    .bg-#{$color}-a#{$alpha}
+    .bg-#{$color}-#{$alpha}
       background-color: rgba(if($color == 'white', #fff, #000), $alpha / 10)

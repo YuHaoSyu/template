@@ -138,7 +138,7 @@ fieldset:disabled a.btn {
 
 // Specificity overrides
 input[type="submit"],
-input[type="reset"],
+// input[type="reset"],
 input[type="button"] {
   &.btn-block {
     width: 100%;
